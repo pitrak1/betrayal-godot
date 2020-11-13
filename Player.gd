@@ -9,10 +9,10 @@ func _ready():
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed():
 		if is_in_bounds(event.global_position):
-			emit_signal("select", self)
+			emit_signal("select", name)
 			
-func select_handler(node):
-	if node == self:
+func select_handler(name):
+	if name == self.name:
 		$SelectedSprite.show()
 	else:
 		$SelectedSprite.hide()

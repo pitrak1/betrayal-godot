@@ -29,6 +29,10 @@ config/icon="res://icon.png"
 window/size/width=1280
 window/size/height=720
 
+[editor_plugins]
+
+enabled=PoolStringArray( "gut" )
+
 [gdnative]
 
 singletons=[ "res://git_api.gdnlib" ]
