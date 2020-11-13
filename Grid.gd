@@ -11,7 +11,9 @@ func _ready():
 	__initialize_rooms()
 	__place_starting_rooms()
 	__setup_camera()
-	rooms[0][0].add_actor(Player.instance())
+	place_actor(Player.instance(), Vector2(0, 0))
+	place_actor(Player.instance(), Vector2(0, 0))
+	place_actor(Player.instance(), Vector2(0, 0))
 	
 func __initialize_rooms():
 	rooms = []
@@ -44,7 +46,8 @@ func place_room(room, grid_position, rotation=0):
 	room.set_position_and_rotation(grid_position, rotation)
 	rooms[grid_position.x][grid_position.y] = room
 	room.connect("select", self, "select_handler")
-
 	
-	
-
+func place_actor(actor, grid_position):
+	assert(rooms[grid_position.x][grid_position.y])
+	rooms[grid_position.x][grid_position.y].add_actor(actor)
+	actor.connect("select", self, "select_handler")

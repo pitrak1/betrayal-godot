@@ -7,7 +7,7 @@ var actor_positioning = [
 	[],
 	[Vector2(0, 0)],
 	[Vector2(-100, 0), Vector2(100, 0)],
-	[Vector2(-200, 0), Vector2(0, 0), Vector2(200, 0)],
+	[Vector2(-100, -100), Vector2(100, -100), Vector2(-100, 100)],
 	[Vector2(-100, -100), Vector2(100, -100), Vector2(-100, 100), Vector2(100, 100)]
 ]
 
@@ -49,6 +49,10 @@ func select_handler(node):
 		$SelectedSprite.hide()
 		
 func is_in_bounds(position):
+	for actor in actors:
+		if actor.is_in_bounds(position):
+			return false
+		
 	var scaling_factor = 512 / 2 * global_scale.x
 	var within_x_bounds = global_position.x - scaling_factor < position.x and position.x < global_position.x + scaling_factor
 	var within_y_bounds = global_position.y - scaling_factor < position.y and position.y < global_position.y + scaling_factor
