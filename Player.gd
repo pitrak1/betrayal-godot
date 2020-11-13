@@ -1,4 +1,4 @@
-extends Sprite
+extends Node2D
 
 signal select(node)
 var key

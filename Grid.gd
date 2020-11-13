@@ -41,8 +41,7 @@ func select_handler(node):
 func place_room(room, grid_position, rotation=0):
 	assert(!rooms[grid_position.x][grid_position.y])
 	add_child(room)
-	room.position = Vector2(grid_position.x * $Constants.tile_size, grid_position.y * $Constants.tile_size)
-	room.rotation = rotation
+	room.set_position_and_rotation(grid_position, rotation)
 	rooms[grid_position.x][grid_position.y] = room
 	room.connect("select", self, "select_handler")
 

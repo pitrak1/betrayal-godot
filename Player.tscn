@@ -5,12 +5,17 @@
 [ext_resource path="res://assets/heather_granville.png" type="Texture" id=3]
 [ext_resource path="res://assets/character_selected.png" type="Texture" id=4]
 
-[node name="Player" type="Sprite"]
+[node name="Player" type="Node2D"]
 z_index = 1
-texture = ExtResource( 3 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Constants" parent="." instance=ExtResource( 2 )]
+
+[node name="ActorSprite" type="Sprite" parent="."]
+texture = ExtResource( 3 )
 
 [node name="SelectedSprite" type="Sprite" parent="."]
 texture = ExtResource( 4 )

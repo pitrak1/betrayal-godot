@@ -5,12 +5,16 @@
 [ext_resource path="res://assets/room_selected.png" type="Texture" id=3]
 [ext_resource path="res://Constants.tscn" type="PackedScene" id=4]
 
-[node name="Room" type="Sprite" groups=[
+[node name="Room" type="Node2D" groups=[
 "selectable",
 ]]
-texture = ExtResource( 1 )
-region_rect = Rect2( 512, 512, 512, 512 )
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="RoomSprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
 
 [node name="SelectedSprite" type="Sprite" parent="."]
 texture = ExtResource( 3 )
