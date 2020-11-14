@@ -9,7 +9,7 @@
 [node name="Grid" type="Node2D"]
 position = Vector2( 640, 360 )
 script = ExtResource( 1 )
-Player = ExtResource( 3 )
+PlayerScene = ExtResource( 3 )
 
 [node name="Constants" parent="." instance=ExtResource( 2 )]
 

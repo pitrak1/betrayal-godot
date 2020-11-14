@@ -6,7 +6,7 @@ var stack = []
 func _ready():
 	for r in $Constants.rooms:
 		var room = Room.instance()
-		room.initialize(r["name"], r["key"], r["index"])
+		room.initialize(r)
 		stack.append(room)
 	stack.shuffle()
 		

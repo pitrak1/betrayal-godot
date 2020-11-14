@@ -1,6 +1,7 @@
 extends Node2D
 
 signal select(node)
+signal activate(node)
 var key	
 var actors = []
 var actor_positioning = [
@@ -10,25 +11,34 @@ var actor_positioning = [
 	[Vector2(-100, -100), Vector2(100, -100), Vector2(-100, 100)],
 	[Vector2(-100, -100), Vector2(100, -100), Vector2(-100, 100), Vector2(100, 100)]
 ]
+var doors = []
+var links = []
 
 func _ready():
 	$SelectedSprite.hide()
 	
-func initialize(name, key, index):
-	self.name = name
-	self.key = key
+func initialize(entry):
+	self.name = entry["name"]
+	self.key = entry["key"]
+	self.doors = entry["doors"]
 
 	$RoomSprite.region_enabled = true
 	$RoomSprite.region_rect = Rect2(
-		index.x * $Constants.tile_size, 
-		index.y * $Constants.tile_size, 
+		entry["index"].x * $Constants.tile_size, 
+		entry["index"].y * $Constants.tile_size, 
 		$Constants.tile_size, 
 		$Constants.tile_size
 	)
+	__reorient_doors()
 	
 func add_actor(actor):
 	actors.append(actor)
 	add_child(actor)
+	__reorient_actors()
+	
+func remove_actor(actor):
+	actors.erase(actor)
+	remove_child(actor)
 	__reorient_actors()
 	
 func __reorient_actors():
@@ -36,11 +46,34 @@ func __reorient_actors():
 	for i in range(actors.size()):
 		actors[i].position = positions[i]
 		
+func __reorient_doors():
+	if doors[$Constants.UP]:
+		$UpDoorSprite.show()
+	else:
+		$UpDoorSprite.hide()
+		
+	if doors[$Constants.RIGHT]:
+		$RightDoorSprite.show()
+	else:
+		$RightDoorSprite.hide()
+		
+	if doors[$Constants.DOWN]:
+		$DownDoorSprite.show()
+	else:
+		$DownDoorSprite.hide()
+		
+	if doors[$Constants.LEFT]:
+		$LeftDoorSprite.show()
+	else:
+		$LeftDoorSprite.hide()
+		
 
 func _input(event):
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed():
-		if is_in_bounds(event.global_position):
+	if event is InputEventMouseButton and is_in_bounds(event.global_position):
+		if event.button_index == BUTTON_LEFT and event.is_pressed():
 			emit_signal("select", self)
+		elif event.button_index == BUTTON_RIGHT and event.is_pressed():
+			emit_signal("activate", self)
 			
 func select_handler(node):
 	if node == self:
@@ -61,3 +94,8 @@ func is_in_bounds(position):
 func set_position_and_rotation(grid_position, rotation):
 	self.position = Vector2(grid_position.x * $Constants.tile_size, grid_position.y * $Constants.tile_size)
 	$RoomSprite.rotation = rotation
+	for i in range(int(rotation / (PI/2))):
+		doors.push_front(doors.pop_back())
+	__reorient_doors()
+	
+		

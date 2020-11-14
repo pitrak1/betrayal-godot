@@ -21,7 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Betrayal"
-run/main_scene="res://Grid.tscn"
+run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
 [display]
