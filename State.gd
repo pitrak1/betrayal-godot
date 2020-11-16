@@ -1,6 +1,8 @@
 extends CanvasItem
 
-func enter():
+signal change_state(state_name, custom_data)
+
+func enter(custom_data):
 	pass
 
 func exit():

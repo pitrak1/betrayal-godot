@@ -2,7 +2,7 @@
 
 [ext_resource path="res://MenuBackground.tscn" type="PackedScene" id=1]
 [ext_resource path="res://states/SplashState.gd" type="Script" id=2]
-[ext_resource path="res://assets/grey_panel.png" type="Texture" id=3]
+[ext_resource path="res://MenuPanel.tscn" type="PackedScene" id=3]
 
 [node name="SplashState" type="Control"]
 anchor_right = 1.0
@@ -15,35 +15,9 @@ __meta__ = {
 [node name="MenuBackground" parent="." instance=ExtResource( 1 )]
 margin_bottom = 0.0
 
-[node name="Panel" type="NinePatchRect" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -200.0
-margin_top = -260.0
-margin_right = 200.0
-margin_bottom = 290.0
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="MenuPanel" parent="." instance=ExtResource( 3 )]
 
-[node name="Title" type="Label" parent="Panel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 50.0
-margin_top = 75.0
-margin_right = -250.0
-margin_bottom = -455.0
-rect_scale = Vector2( 3, 3 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Betrayal Online"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="StartButton" type="Button" parent="Panel"]
+[node name="StartButton" type="Button" parent="MenuPanel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 50.0

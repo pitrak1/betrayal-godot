@@ -1,27 +1,15 @@
 extends "res://State.gd"
 
-func enter():
-	$Panel/HostButton.connect("pressed", self, "on_HostButton_pressed")
-	$Panel/JoinButton.connect("pressed", self, "on_JoinButton_pressed")
-	$Panel/ExitButton.connect("pressed", self, "on_ExitButton_pressed")
+func enter(custom_data):
+	$MenuPanel/HostButton.connect("pressed", self, "on_HostButton_pressed")
+	$MenuPanel/JoinButton.connect("pressed", self, "on_JoinButton_pressed")
+	$MenuPanel/ExitButton.connect("pressed", self, "on_ExitButton_pressed")
 
 func on_HostButton_pressed():
-	print("host")
+	emit_signal("change_state", "HostJoinGameState", { 'host': true })
 	
 func on_JoinButton_pressed():
-	print("join")
+	emit_signal("change_state", "HostJoinGameState", { 'host': false })
 	
 func on_ExitButton_pressed():
 	get_tree().quit()
-
-func exit():
-	pass
-
-func handle_input(_event):
-	pass
-
-func physics_process(_delta):
-	pass
-
-func _on_animation_finished(_anim_name):
-	pass
