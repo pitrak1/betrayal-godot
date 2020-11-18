@@ -22,9 +22,9 @@ func get_players_response(data):
 	else:
 		for i in range(6):
 			var lobby_player = get_node("MenuPanel/LobbyPlayer" + str(i + 1))
-			if i < data["player_names"].size():
-				lobby_player.set_player_name(data["player_names"][i])
-#				lobby_player.set_host_indicator(custom_data["players"].values()[i]["host"])
+			if i < data["players"].size():
+				lobby_player.set_player_name(data["players"][i]["name"])
+				lobby_player.set_host_indicator(data["players"][i]["host"])
 			else:
 				lobby_player.clear_player_name()
 				lobby_player.set_host_indicator(false)

@@ -4,8 +4,6 @@
 [ext_resource path="res://client/states/MainMenuState.gd" type="Script" id=2]
 [ext_resource path="res://common/MenuPanel.tscn" type="PackedScene" id=4]
 
-
-
 [node name="MainMenuState" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0

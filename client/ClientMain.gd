@@ -1,5 +1,7 @@
 extends Node
 
+signal log_string(string)
+
 var current_state = null
 var custom_data = {}
 
@@ -12,11 +14,13 @@ func on_change_state(state_name, custom_data):
 	__change_state(state_name)
 	
 func on_send_network_command(command, data):
+	emit_signal("log_string", "Sending " + command + "...")
 	var method_name = "client_" + command
 	get_parent().call(method_name, data)
 	$LoadingLabel.visible = true
 	
 func on_receive_network_response(command, data):
+	emit_signal("log_string", "Receiving " + command + "...")
 	var method_name = command + "_response"
 	current_state.call(method_name, data)
 	$LoadingLabel.visible = false
@@ -26,11 +30,13 @@ func __change_state(state_name):
 		current_state.hide()
 		current_state.disconnect("change_state", self, "on_change_state")
 		current_state.disconnect("send_network_command", self, "on_send_network_command")
+		current_state.disconnect("log_string", get_parent(), "on_log_string")
 		current_state.exit()
 	current_state = find_node(state_name)
 	current_state.show()
 	current_state.connect("change_state", self, "on_change_state")
 	current_state.connect("send_network_command", self, "on_send_network_command")
+	current_state.connect("log_string", get_parent(), "on_log_string")
 	current_state.enter(custom_data)
 	
 func _unhandled_input(event):

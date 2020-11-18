@@ -1,20 +1,34 @@
 extends Node
 
+signal log_string(string)
+
 var client_scene = preload("res://client/ClientMain.tscn")
 var server_scene = preload("res://server/ServerMain.tscn")
 
 func _ready():
-	print("Application started")
+	connect("log_string", self, "on_log_string")
+	emit_signal("log_string", "Application started!")
+	
 	if OS.has_feature("server"):
-		print("Is server")
-		add_child(server_scene.instance())
+		emit_signal("log_string", "Starting server...")
+		var scene = server_scene.instance()
+		scene.connect("log_string", self, "on_log_string")
+		add_child(scene)
+		move_child(scene, 0)
 	elif OS.has_feature("client"):
-		print("Is client")
-		add_child(client_scene.instance())
+		emit_signal("log_string", "Starting client...")
+		var scene = client_scene.instance()
+		scene.connect("log_string", self, "on_log_string")
+		add_child(scene)
+		move_child(scene, 0)
 	else:
-		print("Could not detect application type! Defaulting to client.")
-		add_child(client_scene.instance())
-#		add_child(server_scene.instance())
+		emit_signal("log_string", "Starting client by default...")
+		var scene = client_scene.instance()
+#		emit_signal("log_string", "Starting server by default...")
+#		var scene = server_scene.instance()
+		scene.connect("log_string", self, "on_log_string")
+		add_child(scene)
+		move_child(scene, 0)
 		
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
@@ -22,9 +36,9 @@ func _ready():
 	get_tree().connect("connection_failed", self, "_connected_fail")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 	
-func __is_server():
-	return get_tree().get_network_unique_id() == 1
-
+func on_log_string(string):
+	$Log.text += "\n" + string
+	
 func _player_connected(id):
 	print("player_connected: " + str(id))
 
@@ -40,35 +54,48 @@ func _server_disconnected():
 func _connected_fail():
 	pass # Could not even connect to server; abort.
 
-remote func server_register_player(data):
+remote func server_register_player_and_create_game(data):
+	emit_signal("log_string", "server_register_player_and_create_game")
 	var sender_id = get_tree().get_rpc_sender_id()
-	var response = $ServerMain.register_player(sender_id, data["player_name"])
-	rpc_id(sender_id, "client_register_player_response", response)
+	var response = $ServerMain.register_player_and_create_game(sender_id, data["player_name"], data["game_name"])
+	rpc_id(sender_id, "client_register_player_and_create_game_response", response)
 	
-func client_register_player(data):
-	rpc_id(1, "server_register_player", data)
+func client_register_player_and_create_game(data):
+	emit_signal("log_string", "client_register_player_and_create_game")
+	rpc_id(1, "server_register_player_and_create_game", data)
 	
-remote func client_register_player_response(status):
-	$ClientMain.on_receive_network_response("register_player", status)
+remote func client_register_player_and_create_game_response(status):
+	emit_signal("log_string", "client_register_player_and_create_game_response")
+	$ClientMain.on_receive_network_response("register_player_and_create_game", status)
 	
-remote func server_create_game(data):
+remote func server_register_player_and_join_game(data):
+	emit_signal("log_string", "server_register_player_and_join_game")
 	var sender_id = get_tree().get_rpc_sender_id()
-	var response = $ServerMain.create_game(sender_id, data["game_name"])
-	rpc_id(sender_id, "client_create_game_response", response)
+	var response = $ServerMain.register_player_and_join_game(sender_id, data["player_name"], data["game_name"])
+	rpc_id(sender_id, "client_register_player_and_join_game_response", response)
 	
-func client_create_game(data):
-	rpc_id(1, "server_create_game", data)
+func client_register_player_and_join_game(data):
+	emit_signal("log_string", "client_register_player_and_join_game")
+	rpc_id(1, "server_register_player_and_join_game", data)
 	
-remote func client_create_game_response(status):
-	$ClientMain.on_receive_network_response("create_game", status)
+remote func client_register_player_and_join_game_response(status):
+	emit_signal("log_string", "client_register_player_and_join_game_response")
+	$ClientMain.on_receive_network_response("register_player_and_join_game", status)
 	
 remote func server_get_players(data):
+	emit_signal("log_string", "server_get_players")
 	var sender_id = get_tree().get_rpc_sender_id()
 	var response = $ServerMain.get_players(sender_id, data["game_name"])
-	rpc_id(sender_id, "client_get_players_response", response)
+	if response["status"] == "success":
+		for player_id in response["player_ids"]:
+			rpc_id(player_id, "client_get_players_response", response)
+	else:
+		rpc_id(sender_id, "client_get_players_response", response)
 	
 func client_get_players(data):
+	emit_signal("log_string", "client_get_players")
 	rpc_id(1, "server_get_players", data)
 	
 remote func client_get_players_response(data):
+	emit_signal("log_string", "client_get_players_response")
 	$ClientMain.on_receive_network_response("get_players", data)

@@ -1,5 +1,7 @@
 extends Node
 
+signal log_string(string)
+
 var players = {}
 var games = {}
 
@@ -8,23 +10,28 @@ func _ready():
 	peer.create_server(8910, 6)
 	get_tree().network_peer = peer
 	
-func register_player(id, player_name):
+func register_player_and_create_game(id, player_name, game_name):
 	var response
 	if id in players.keys():
 		response = "invalid_player_name"
-	else:
-		response = "success"
-		players[id] = { "name": player_name }
-	return response
-	
-func create_game(id, game_name):
-	var response
-	if game_name in games.keys():
+	elif game_name in games.keys():
 		response = "invalid_game_name"
 	else:
 		response = "success"
+		players[id] = { "name": player_name, "game_name": game_name, "host": true }
 		games[game_name] = { "players": [id] }
-		players[id]["game_name"] = game_name
+	return response
+
+func register_player_and_join_game(id, player_name, game_name):
+	var response
+	if id in players.keys():
+		response = "invalid_player_name"
+	elif not game_name in games.keys():
+		response = "invalid_game_name"
+	else:
+		response = "success"
+		players[id] = { "name": player_name, "game_name": game_name, "host": false }
+		games[game_name]["players"].append(id)
 	return response
 	
 func get_players(id, game_name):
@@ -32,9 +39,9 @@ func get_players(id, game_name):
 	if not game_name in games.keys():
 		response = { "status": "nonexistent_game" }
 	else:
-		response = { "status": "success", "player_names": [] }
 		var player_ids = games[game_name]["players"]
+		response = { "status": "success", "players": [], "player_ids": player_ids }
 		for player_id in player_ids:
-			response["player_names"].append(players[player_id]["name"])
+			response["players"].append(players[player_id])
 	return response
 		
