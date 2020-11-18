@@ -1,9 +1,12 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://states/HostJoinGameState.gd" type="Script" id=1]
-[ext_resource path="res://MenuBackground.tscn" type="PackedScene" id=2]
-[ext_resource path="res://MenuPanel.tscn" type="PackedScene" id=3]
-[ext_resource path="res://TextInput.tscn" type="PackedScene" id=4]
+[ext_resource path="res://client/states/HostJoinGameState.gd" type="Script" id=1]
+[ext_resource path="res://common/MenuBackground.tscn" type="PackedScene" id=2]
+[ext_resource path="res://common/MenuPanel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://common/TextInput.tscn" type="PackedScene" id=4]
+
+
+
 
 [node name="HostJoinGameState" type="Control"]
 anchor_right = 1.0

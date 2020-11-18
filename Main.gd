@@ -1,71 +1,58 @@
 extends Node
 
-var current_state = null
-var custom_data = {}
+var client_scene = preload("res://client/ClientMain.tscn")
+var server_scene = preload("res://server/ServerMain.tscn")
 
 func _ready():
-	__change_state(get_child(0).name)
+	print("Application started")
+	if OS.has_feature("server"):
+		print("Is server")
+		add_child(server_scene.instance())
+	elif OS.has_feature("client"):
+		print("Is client")
+		add_child(client_scene.instance())
+	else:
+		print("Could not detect application type! Defaulting to client.")
+		add_child(client_scene.instance())
+		
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	get_tree().connect("connected_to_server", self, "_connected_ok")
 	get_tree().connect("connection_failed", self, "_connected_fail")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
-
-func on_change_state(state_name, custom_data):
-	for key in custom_data.keys():
-		self.custom_data[key] = custom_data[key]
-	__change_state(state_name)
 	
-func __change_state(state_name):
-	if current_state:
-		current_state.hide()
-		current_state.disconnect("change_state", self, "on_change_state")
-		current_state.exit()
-	current_state = find_node(state_name)
-	current_state.show()
-	current_state.connect("change_state", self, "on_change_state")
-	current_state.enter(custom_data)
-	
-func _unhandled_input(event):
-	current_state.handle_input(event)
-
-func _physics_process(delta):
-	current_state.physics_process(delta)
-
-func _on_animation_finished(anim_name):
-	current_state._on_animation_finished(anim_name)
+func __is_server():
+	return get_tree().get_network_unique_id() == 1
 
 func _player_connected(id):
-	# Called on both clients and server when a peer connects. Send my info to it.
-	print("player_connected")
-	rpc_id(id, "register_player", custom_data)
+	print("player_connected: " + str(id))
 
 func _player_disconnected(id):
-	print("player_disconnected")
-	custom_data["players"].erase(id) # Erase player from info.
-	current_state.update_custom_data(self.custom_data)
+	print("player_disconnected: " + str(id))
 
 func _connected_ok():
 	print("connected_ok")
-	pass # Only called on clients, not server. Will go unused; not useful here.
 
 func _server_disconnected():
-	print("server_disconnected")
 	pass # Server kicked us; show error and abort.
 
 func _connected_fail():
-	print("connected_fail")
 	pass # Could not even connect to server; abort.
 
-remote func register_player(custom_data):
-	print("register_player")
-	# Get the id of the RPC sender.
-	var id = get_tree().get_rpc_sender_id()
-	# Store the info
-	self.custom_data["players"][id] = { 
-		"player_name": custom_data["player_name"],
-		"host": custom_data["host"]
-	}
-	current_state.update_custom_data(self.custom_data)
+var players = {}
 
-	# Call function to update lobby UI here
+remote func server_register_player(data):
+	var sender_id = get_tree().get_rpc_sender_id()
+	var response
+	if sender_id in players.keys():
+		response = "invalid_player_name"
+	else:
+		response = "success"
+	players[sender_id] = { "name": data["player_name"] }
+	rpc_id(sender_id, "client_register_player_response", response)
+	
+func client_register_player(data):
+	rpc_id(1, "server_register_player", data)
+	
+remote func client_register_player_response(status):
+	$ClientMain.on_receive_network_response("register_player", status)

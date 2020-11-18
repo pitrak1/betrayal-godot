@@ -1,11 +1,10 @@
 extends CanvasItem
 
 signal change_state(state_name, custom_data)
-
-var custom_data
+signal send_network_command(command_name, data)
 
 func enter(custom_data):
-	custom_data = custom_data
+	pass
 
 func exit():
 	pass
@@ -18,6 +17,3 @@ func physics_process(_delta):
 
 func _on_animation_finished(_anim_name):
 	pass
-	
-func update_custom_data(custom_data):
-	custom_data = custom_data

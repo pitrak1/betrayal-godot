@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/heather_granville.png" type="Texture" id=1]
-[ext_resource path="res://AttributeInfo.tscn" type="PackedScene" id=2]
-[ext_resource path="res://ActorInfo.gd" type="Script" id=3]
+[ext_resource path="res://common/AttributeInfo.tscn" type="PackedScene" id=1]
+[ext_resource path="res://common/ActorInfo.gd" type="Script" id=2]
+[ext_resource path="res://assets/heather_granville.png" type="Texture" id=3]
 
 [node name="ActorInfo" type="Control"]
 anchor_left = 1.0
@@ -10,14 +10,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -200.0
 margin_bottom = 6.10352e-05
-script = ExtResource( 3 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ActorSprite" type="Sprite" parent="."]
 position = Vector2( 100, 200 )
-texture = ExtResource( 1 )
+texture = ExtResource( 3 )
 
 [node name="NameLabel" type="Label" parent="."]
 anchor_left = 1.0
@@ -52,22 +52,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StrengthAttribute" parent="." instance=ExtResource( 2 )]
+[node name="StrengthAttribute" parent="." instance=ExtResource( 1 )]
 margin_top = 370.0
 margin_right = 1.52588e-05
 margin_bottom = -300.0
 
-[node name="SpeedAttribute" parent="." instance=ExtResource( 2 )]
+[node name="SpeedAttribute" parent="." instance=ExtResource( 1 )]
 margin_top = 450.0
 margin_right = 1.52588e-05
 margin_bottom = -220.0
 
-[node name="KnowledgeAttribute" parent="." instance=ExtResource( 2 )]
+[node name="KnowledgeAttribute" parent="." instance=ExtResource( 1 )]
 margin_top = 530.0
 margin_right = 1.52588e-05
 margin_bottom = -140.0
 
-[node name="SanityAttribute" parent="." instance=ExtResource( 2 )]
+[node name="SanityAttribute" parent="." instance=ExtResource( 1 )]
 margin_top = 610.0
 margin_right = 1.52588e-05
 margin_bottom = -60.0001

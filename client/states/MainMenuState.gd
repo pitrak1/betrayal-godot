@@ -1,4 +1,4 @@
-extends "res://State.gd"
+extends "res://common/State.gd"
 
 func enter(custom_data):
 	$MenuPanel/HostButton.connect("pressed", self, "on_HostButton_pressed")
