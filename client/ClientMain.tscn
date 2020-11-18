@@ -20,3 +20,14 @@ visible = false
 
 [node name="LobbyState" parent="." instance=ExtResource( 3 )]
 visible = false
+
+[node name="LoadingLabel" type="Label" parent="."]
+visible = false
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 71.0
+margin_bottom = 24.0
+text = "Loading..."
+__meta__ = {
+"_edit_use_anchors_": false
+}

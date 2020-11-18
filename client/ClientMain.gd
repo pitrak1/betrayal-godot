@@ -14,10 +14,12 @@ func on_change_state(state_name, custom_data):
 func on_send_network_command(command, data):
 	var method_name = "client_" + command
 	get_parent().call(method_name, data)
+	$LoadingLabel.visible = true
 	
 func on_receive_network_response(command, data):
 	var method_name = command + "_response"
 	current_state.call(method_name, data)
+	$LoadingLabel.visible = false
 	
 func __change_state(state_name):
 	if current_state:

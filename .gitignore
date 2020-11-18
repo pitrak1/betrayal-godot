@@ -9,3 +9,4 @@ lib/
 *.translation
 export_presets.cfg
 .mono/
+**/.DS_Store
