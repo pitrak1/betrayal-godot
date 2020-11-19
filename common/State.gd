@@ -4,6 +4,8 @@ signal log_string(string)
 signal change_state(state_name, custom_data)
 signal send_network_command(command_name, data)
 
+var custom_data
+
 func enter(custom_data):
 	pass
 

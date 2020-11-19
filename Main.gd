@@ -99,3 +99,32 @@ func client_get_players(data):
 remote func client_get_players_response(data):
 	emit_signal("log_string", "client_get_players_response")
 	$ClientMain.on_receive_network_response("get_players", data)
+	
+remote func server_start_game(data):
+	emit_signal("log_string", "server_start_game")
+	var sender_id = get_tree().get_rpc_sender_id()
+	var response = $ServerMain.start_game(sender_id)
+	for player_id in response["player_ids"]:
+		rpc_id(player_id, "client_start_game_response", response)
+	
+func client_start_game(data):
+	emit_signal("log_string", "client_start_game")
+	rpc_id(1, "server_start_game", data)
+	
+remote func client_start_game_response(data):
+	emit_signal("log_string", "client_start_game_response")
+	$ClientMain.on_receive_network_response("start_game", data)
+	
+remote func server_get_player_order(data):
+	emit_signal("log_string", "server_get_player_order")
+	var sender_id = get_tree().get_rpc_sender_id()
+	var response = $ServerMain.get_player_order(sender_id)
+	rpc_id(sender_id, "client_get_player_order_response", response)
+	
+func client_get_player_order(data):
+	emit_signal("log_string", "client_get_player_order")
+	rpc_id(1, "server_get_player_order", data)
+	
+remote func client_get_player_order_response(data):
+	emit_signal("log_string", "client_get_player_order_response")
+	$ClientMain.on_receive_network_response("get_player_order", data)

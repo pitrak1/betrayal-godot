@@ -44,4 +44,15 @@ func get_players(id, game_name):
 		for player_id in player_ids:
 			response["players"].append(players[player_id])
 	return response
+	
+func start_game(id):
+	var player_ids = games[players[id]["game_name"]]["players"]
+	return { "status": "success", "player_ids": player_ids }
+	
+func get_player_order(id):
+	var player_ids = games[players[id]["game_name"]]["players"]
+	var player_names = []
+	for player_id in player_ids:
+		player_names.append(players[player_id]["name"])
+	return { "status": "success", "player_ids": player_ids, "player_names": player_names }
 		

@@ -5,7 +5,7 @@ var player_name
 var game_name
 
 func enter(custom_data):
-	custom_data = custom_data
+	self.custom_data = custom_data
 	host = custom_data["host"]
 	player_name = custom_data["player_name"]
 	game_name = custom_data["game_name"]
@@ -13,6 +13,8 @@ func enter(custom_data):
 	$MenuPanel.set_title(game_name)
 	$MenuPanel/StartButton.connect("pressed", self, "on_StartButton_pressed")
 	$MenuPanel/BackButton.connect("pressed", self, "on_BackButton_pressed")
+	if not host:
+		$MenuPanel/StartButton.visible = false
 	
 	emit_signal("send_network_command", "get_players", { "game_name": game_name })
 	
@@ -30,7 +32,10 @@ func get_players_response(data):
 				lobby_player.set_host_indicator(false)
 	
 func on_StartButton_pressed():
-	pass
+	emit_signal("send_network_command", "start_game", {})
+	
+func start_game_response(data):
+	emit_signal("change_state", "PlayerOrderState", custom_data)
 	
 func on_BackButton_pressed():
 	get_tree().network_peer = null
