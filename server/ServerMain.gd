@@ -47,6 +47,7 @@ func get_players(id, game_name):
 	
 func start_game(id):
 	var player_ids = games[players[id]["game_name"]]["players"]
+	games[players[id]["game_name"]]["waiting"] = 0
 	return { "status": "success", "player_ids": player_ids }
 	
 func get_player_order(id):
@@ -56,3 +57,12 @@ func get_player_order(id):
 		player_names.append(players[player_id]["name"])
 	return { "status": "success", "player_ids": player_ids, "player_names": player_names }
 		
+func accept_player_order(id):
+	var game = games[players[id]["game_name"]]
+	var player_ids = game["players"]
+	game["waiting"] += 1
+	if game["waiting"] >= player_ids.size():
+		game["waiting"] += 1
+		return { "status": "success", "player_ids": player_ids, "ready": true }
+	else:
+		return { "status": "success", "player_ids": player_ids, "ready": false }

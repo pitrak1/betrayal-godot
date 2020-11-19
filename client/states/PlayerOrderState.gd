@@ -17,4 +17,4 @@ func on_ContinueButton_pressed():
 	emit_signal("send_network_command", "accept_player_order", {})
 	
 func accept_player_order_response(response):
-	print("accepted")
+	print("accepted order")
