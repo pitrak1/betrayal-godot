@@ -18,8 +18,8 @@ func register_player_and_create_game(id, data):
 		result["response"]["status"] = "invalid_game_name"
 	else:
 		result["response"]["status"] = "success"
-		players[id] = { "name": data["player_name"], "game_name": data["game_name"], "host": true }
-		games[data["game_name"]] = { "players": [id], "waiting": 0 }
+		players[id] = { "name": data["player_name"], "game_name": data["game_name"], "host": true, "character_index": null }
+		games[data["game_name"]] = { "players": [id], "waiting": 0, "current_player_index": 0, "unavailable_characters": [] }
 	return result
 
 func register_player_and_join_game(id, data):
@@ -30,7 +30,7 @@ func register_player_and_join_game(id, data):
 		result["response"]["status"] = "invalid_game_name"
 	else:
 		result["response"]["status"] = "success"
-		players[id] = { "name": data["player_name"], "game_name": data["game_name"], "host": false }
+		players[id] = { "name": data["player_name"], "game_name": data["game_name"], "host": false, "character_index": null }
 		games[data["game_name"]]["players"].append(id)
 	return result
 	
@@ -59,5 +59,39 @@ func confirm_player_order(id, data):
 	if game["waiting"] >= player_ids.size():
 		game["waiting"] = 0
 		return { "response_type": "broadcast", "response": { "status": "success", "ready": true }, "player_ids": player_ids }
-	else:
-		return { "response_type": "return", "response": { "status": "success", "ready": false } }
+
+func get_current_player(id, data):
+	var game = games[players[id]["game_name"]]
+	return { 
+		"response_type": "return", 
+		"response": { 
+			"status": "success", 
+			"current_player": players[game["players"][game["current_player_index"]]]["name"], 
+			"is_current_player": game["players"][game["current_player_index"]] == id
+		}
+	}
+	
+func select_character(id, data):
+	var game = games[players[id]["game_name"]]
+	game["unavailable_characters"].append(data["character_index"])
+	var entry = $Constants.characters[data["character_index"]]
+	for i in range($Constants.characters.size()):
+		if $Constants.characters[i]["key"] in entry["related"]:
+			game["unavailable_characters"].append(i)
+	players[id]["character_index"] = data["character_index"]
+	game["current_player_index"] += 1
+	
+	var all_selected = false
+	if game["current_player_index"] >= game["players"].size():
+		all_selected = true
+		game["current_player_index"] = 0
+		
+	return {
+		"response_type": "broadcast",
+		"response": {
+			"status": "success",
+			"unavailable_characters": game["unavailable_characters"],
+			"all_selected": all_selected
+		},
+		"player_ids": game["players"]
+	}

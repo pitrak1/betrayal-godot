@@ -1,0 +1,108 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://client/states/CharacterSelectionState.gd" type="Script" id=1]
+[ext_resource path="res://common/GameBackground.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/grey_panel.png" type="Texture" id=3]
+[ext_resource path="res://common/ActorInfo.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/right_arrow.png" type="Texture" id=5]
+[ext_resource path="res://common/Constants.tscn" type="PackedScene" id=6]
+
+[node name="CharacterSelectionState" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameBackground" parent="." instance=ExtResource( 2 )]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 0.0
+margin_bottom = 0.0
+
+[node name="CharacterInfoPanel" type="NinePatchRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 120.0
+margin_top = -340.0
+margin_right = 320.0
+margin_bottom = 341.0
+texture = ExtResource( 3 )
+patch_margin_left = 33
+patch_margin_top = 33
+patch_margin_right = 33
+patch_margin_bottom = 33
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ActorInfo" parent="CharacterInfoPanel" instance=ExtResource( 4 )]
+anchor_left = 0.0
+margin_left = 0.0
+
+[node name="RightButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 350.0
+margin_top = -110.0
+margin_right = 602.0
+margin_bottom = 290.0
+rect_scale = Vector2( 0.5, 0.5 )
+icon = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LeftButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 90.0001
+margin_top = 90.0
+margin_right = 342.0
+margin_bottom = 490.0
+rect_rotation = 180.0
+rect_scale = Vector2( 0.5, 0.5 )
+icon = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SelectButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -490.0
+margin_top = 40.0
+margin_right = -340.0
+margin_bottom = 90.0
+rect_scale = Vector2( 2, 2 )
+text = "Select"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerLabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -590.0
+margin_top = -110.0
+margin_right = -340.0
+margin_bottom = -80.0
+rect_scale = Vector2( 2, 2 )
+text = "You are currently selecting."
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Constants" parent="." instance=ExtResource( 6 )]

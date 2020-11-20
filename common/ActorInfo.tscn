@@ -52,7 +52,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StrengthAttribute" parent="." instance=ExtResource( 1 )]
+[node name="MightAttribute" parent="." instance=ExtResource( 1 )]
 margin_top = 370.0
 margin_right = 1.52588e-05
 margin_bottom = -300.0
