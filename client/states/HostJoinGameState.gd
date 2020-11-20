@@ -40,20 +40,20 @@ func on_StartButton_pressed():
 			{ "player_name": player_name, "game_name": game_name }
 		)
 		
-func register_player_and_create_game_response(status):
-	emit_signal("log_string", "Handling register_player_and_create_game_response with status " + status + "...")
-	__response(status)
+func register_player_and_create_game_response(data):
+	emit_signal("log_string", "Handling register_player_and_create_game_response with status " + data["status"] + "...")
+	__response(data)
 	
-func register_player_and_join_game_response(status):
-	emit_signal("log_string", "Handling register_player_and_join_game_response with status " + status + "...")
-	__response(status)
+func register_player_and_join_game_response(data):
+	emit_signal("log_string", "Handling register_player_and_join_game_response with status " + data["status"] + "...")
+	__response(data)
 	
-func __response(status):
-	if status == "invalid_player_name":
+func __response(data):
+	if data["status"] == "invalid_player_name":
 		$MenuPanel/PlayerNameTextInput.set_validation_label("Name is already in use")
-	elif status == "invalid_game_name":
+	elif data["status"] == "invalid_game_name":
 		$MenuPanel/GameNameTextInput.set_validation_label("Name is already in use")
-	elif status == "success":
+	elif data["status"] == "success":
 		emit_signal("change_state", "LobbyState", {
 			"host": host,
 			"player_name": player_name,

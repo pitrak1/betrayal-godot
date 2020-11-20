@@ -13,15 +13,12 @@ func on_change_state(state_name, custom_data):
 		self.custom_data[key] = custom_data[key]
 	__change_state(state_name)
 	
-func on_send_network_command(command, data):
-	emit_signal("log_string", "Sending " + command + "...")
-	var method_name = "client_" + command
-	get_parent().call(method_name, data)
+func on_send_network_command(command_type, data):
+	get_parent().call("client_handle_outgoing_network_command", command_type, data)
 	$LoadingLabel.visible = true
 	
-func on_receive_network_response(command, data):
-	emit_signal("log_string", "Receiving " + command + "...")
-	var method_name = command + "_response"
+func on_receive_network_response(command_type, data):
+	var method_name = command_type + "_response"
 	current_state.call(method_name, data)
 	$LoadingLabel.visible = false
 	

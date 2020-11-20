@@ -16,7 +16,7 @@ func enter(custom_data):
 	if not host:
 		$MenuPanel/StartButton.visible = false
 	
-	emit_signal("send_network_command", "get_players", { "game_name": game_name })
+	emit_signal("send_network_command", "get_players", {})
 	
 func get_players_response(data):
 	if data["status"] != "success":
