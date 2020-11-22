@@ -95,3 +95,23 @@ func select_character(id, data):
 		},
 		"player_ids": game["players"]
 	}
+	
+func get_character_selections(id, data):
+	var player_ids = games[players[id]["game_name"]]["players"]
+	var player_selections = []
+	for player_id in player_ids:
+		var player_name = players[player_id]["name"]
+		var character_name = $Constants.characters[players[player_id]["character_index"]]["display_name"] 
+		player_selections.append({ 
+			"player_name": player_name, 
+			"character_name": character_name
+		})
+	return { "response_type": "return", "response": { "status": "success", "selections": player_selections } }
+	
+func confirm_character_selections(id, data):
+	var game = games[players[id]["game_name"]]
+	var player_ids = game["players"]
+	game["waiting"] += 1
+	if game["waiting"] >= player_ids.size():
+		game["waiting"] = 0
+		return { "response_type": "broadcast", "response": { "status": "success", "ready": true }, "player_ids": player_ids }

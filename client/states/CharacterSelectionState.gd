@@ -4,6 +4,7 @@ var character_index = 0
 var unavailable_characters = []
 
 func enter(custom_data):
+	self.custom_data = custom_data
 	emit_signal("log_string", "Entering CharacterSelectionState...")
 	$SelectButton.connect("pressed", self, "on_SelectButton_pressed")
 	$LeftButton.connect("pressed", self, "on_LeftButton_pressed")
@@ -26,7 +27,7 @@ func on_SelectButton_pressed():
 	
 func select_character_response(response):
 	if response["all_selected"]:
-		print("To the next state!")
+		emit_signal("change_state", "CharacterConfirmationState", custom_data)
 	else:
 		unavailable_characters = response["unavailable_characters"]
 		emit_signal("send_network_command", "get_current_player", {})
