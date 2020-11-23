@@ -8,7 +8,6 @@ func enter(custom_data):
 	
 func get_players_response(response):
 	for player in response["players"]:
-		emit_signal("log_string", player["name"])
 		$PlayerOrderLabel.text += player["name"] + ", "
 	$PlayerOrderLabel.text = $PlayerOrderLabel.text.substr(0, $PlayerOrderLabel.text.length() - 2)
 	

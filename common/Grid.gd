@@ -7,15 +7,16 @@ var room_resource
 var room_entries
 var rooms
 var selected
-
-func _ready():
+	
+func setup():
 	room_entries = $Constants.rooms
+	__setup_stack()
 	__initialize_rooms()
 	__place_starting_rooms()
 	__setup_camera()
-	var actor = ActorScene.instance()
-	place_actor(actor, Vector2(0, 0))
-	move_actor(actor, Vector2(0, 0), Vector2(0, -1))
+	
+func __setup_stack():
+	$RoomStack.setup()
 	
 func __initialize_rooms():
 	rooms = []
@@ -26,7 +27,8 @@ func __initialize_rooms():
 			
 func __place_starting_rooms():
 	for starting_room in $Constants.starting_rooms:
-		place_room($RoomStack.get_by_key(starting_room["key"]), starting_room["position"], starting_room["rotation"])
+		var room = $RoomStack.get_by_key(starting_room["key"])
+		place_room(room, starting_room["position"], starting_room["rotation"])
 		
 func __setup_camera():
 	$Camera.connect("zoom", self, "_on_Camera_zoom")

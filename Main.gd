@@ -16,10 +16,10 @@ func _ready():
 		emit_signal("log_string", "Starting client...")
 		__create_scene(client_scene)
 	else:
-#		emit_signal("log_string", "Starting client by default...")
-#		__create_scene(client_scene)
-		emit_signal("log_string", "Starting server by default...")
-		__create_scene(server_scene)
+		emit_signal("log_string", "Starting client by default...")
+		__create_scene(client_scene)
+#		emit_signal("log_string", "Starting server by default...")
+#		__create_scene(server_scene)
 		
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")

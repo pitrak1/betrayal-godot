@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://client/states/HostJoinGameState.tscn" type="PackedScene" id=1]
 [ext_resource path="res://client/states/MainMenuState.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://client/states/PlayerOrderState.tscn" type="PackedScene" id=6]
 [ext_resource path="res://client/states/CharacterSelectionState.tscn" type="PackedScene" id=7]
 [ext_resource path="res://client/states/CharacterConfirmationState.tscn" type="PackedScene" id=8]
+[ext_resource path="res://client/states/TurnGameState.tscn" type="PackedScene" id=9]
 
 [node name="ClientMain" type="Node"]
 script = ExtResource( 5 )
@@ -31,6 +32,9 @@ visible = false
 visible = false
 
 [node name="CharacterConfirmationState" parent="." instance=ExtResource( 8 )]
+visible = false
+
+[node name="TurnGameState" parent="." instance=ExtResource( 9 )]
 visible = false
 
 [node name="LoadingLabel" type="Label" parent="."]

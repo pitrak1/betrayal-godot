@@ -2,8 +2,8 @@ extends Node
 
 export (PackedScene) var Room
 var stack = []
-
-func _ready():
+	
+func setup():
 	for r in $Constants.rooms:
 		var room = Room.instance()
 		room.initialize(r)
