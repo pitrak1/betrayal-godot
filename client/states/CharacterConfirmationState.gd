@@ -1,6 +1,8 @@
 extends "res://common/State.gd"
 
 var grid_scene = preload("res://common/Grid.tscn")
+var player_scene = preload("res://common/Player.tscn")
+var actor_scene = preload("res://common/Actor.tscn")
 var players
 
 func enter(custom_data):
@@ -23,4 +25,12 @@ func confirm_sync_response(response):
 	emit_signal("log_string", "Handling confirm_sync_response...")
 	var grid = grid_scene.instance()
 	grid.setup()
-	emit_signal("change_state", "TurnGameState", { "grid": grid })
+	var player_nodes = []
+	for player_info in self.players:
+		var player = player_scene.instance()
+		player.name = player_info["name"]
+		player.host = player_info["host"]
+		player.mine = player_info["name"] == custom_data["player_name"]
+		player.actors.append(actor_scene.instance())
+		grid.place_actor(player.actors[0], Vector2(0, 0))
+	emit_signal("change_state", "TurnGameState", { "grid": grid, "players": player_nodes })
