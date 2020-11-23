@@ -1,19 +1,13 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://common/Grid.gd" type="Script" id=1]
 [ext_resource path="res://common/Constants.tscn" type="PackedScene" id=2]
-[ext_resource path="res://common/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://common/RoomStack.tscn" type="PackedScene" id=4]
 [ext_resource path="res://common/Camera.tscn" type="PackedScene" id=5]
-
-
-
-
 
 [node name="Grid" type="Node2D"]
 position = Vector2( 640, 360 )
 script = ExtResource( 1 )
-PlayerScene = ExtResource( 3 )
 
 [node name="Constants" parent="." instance=ExtResource( 2 )]
 

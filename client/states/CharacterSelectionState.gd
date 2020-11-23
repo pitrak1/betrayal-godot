@@ -15,12 +15,13 @@ func enter(custom_data):
 	$CharacterInfoPanel/ActorInfo.set_status_label("")
 	
 func get_current_player_response(response):
-	if response["is_current_player"]:
+	if response["current_player"] == custom_data["player_name"]:
 		$SelectButton.visible = true
 		$PlayerLabel.text = "You are selecting."
 	else:
 		$SelectButton.visible = false
 		$PlayerLabel.text = response["current_player"] + " is selecting."
+	__redraw()
 	
 func on_SelectButton_pressed():
 	emit_signal("send_network_command", "select_character", { "character_index": character_index })
@@ -36,17 +37,15 @@ func on_LeftButton_pressed():
 	character_index -= 1
 	if character_index < 0:
 		character_index = $Constants.characters.size() - 1
-	var entry = $Constants.characters[character_index]
-	$CharacterInfoPanel/ActorInfo.set_character_from_entry(entry)
-	if character_index in unavailable_characters:
-		$CharacterInfoPanel/ActorInfo.set_status_label("UNAVAILABLE")
-	else:
-		$CharacterInfoPanel/ActorInfo.set_status_label("")
+	__redraw()
 	
 func on_RightButton_pressed():
 	character_index += 1
 	if character_index > $Constants.characters.size() - 1:
 		character_index = 0
+	__redraw()
+		
+func __redraw():
 	var entry = $Constants.characters[character_index]
 	$CharacterInfoPanel/ActorInfo.set_character_from_entry(entry)
 	if character_index in unavailable_characters:

@@ -1,25 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://common/Player.gd" type="Script" id=1]
-[ext_resource path="res://common/Constants.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/heather_granville.png" type="Texture" id=3]
-[ext_resource path="res://assets/character_selected.png" type="Texture" id=4]
 
-
-
-[node name="Player" type="Node2D" groups=[
-"selectable",
-]]
-z_index = 1
+[node name="Player" type="Node"]
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Constants" parent="." instance=ExtResource( 2 )]
-
-[node name="ActorSprite" type="Sprite" parent="."]
-texture = ExtResource( 3 )
-
-[node name="SelectedSprite" type="Sprite" parent="."]
-texture = ExtResource( 4 )

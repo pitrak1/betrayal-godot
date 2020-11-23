@@ -1,8 +1,8 @@
 extends Node2D
 
-export (PackedScene) var PlayerScene
-const Room = preload("res://Room.gd")
-const Player = preload("res://Player.gd")
+export (PackedScene) var ActorScene
+const Room = preload("res://common/Room.gd")
+const Actor = preload("res://common/Actor.gd")
 var room_resource
 var room_entries
 var rooms
@@ -13,9 +13,9 @@ func _ready():
 	__initialize_rooms()
 	__place_starting_rooms()
 	__setup_camera()
-	var player = PlayerScene.instance()
-	place_actor(player, Vector2(0, 0))
-	move_actor(player, Vector2(0, 0), Vector2(0, -1))
+	var actor = ActorScene.instance()
+	place_actor(actor, Vector2(0, 0))
+	move_actor(actor, Vector2(0, 0), Vector2(0, -1))
 	
 func __initialize_rooms():
 	rooms = []
@@ -44,7 +44,7 @@ func select_handler(node):
 	get_tree().call_group("selectable", "select_handler", node)
 
 func activate_handler(node):
-	if selected is Player and node is Room:
+	if selected is Actor and node is Room:
 		var start_room_position
 		for i in range($Constants.grid_dimensions.x):
 			for j in range($Constants.grid_dimensions.y):
