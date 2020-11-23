@@ -5,7 +5,7 @@
 [ext_resource path="res://assets/heather_granville.png" type="Texture" id=3]
 [ext_resource path="res://common/Actor.gd" type="Script" id=4]
 
-[node name="Player" type="Node2D" groups=[
+[node name="Actor" type="Node2D" groups=[
 "selectable",
 ]]
 z_index = 1
