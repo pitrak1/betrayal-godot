@@ -115,8 +115,76 @@ class TestHostJoinGameState:
 		player.current_state.on_StartButton_pressed()
 		player.current_state.register_player_and_create_game_response({ "status": "success" })
 		assert_true(player.current_state is lobby_state)
+		
+class TestLobbyState:
+	extends "res://addons/gut/test.gd"
 	
-
+	var client_scene = preload("res://client/ClientMain.tscn")
+	var lobby_state = preload("res://client/states/LobbyState.gd")
+	var main_menu_state = preload("res://client/states/MainMenuState.gd")
+	var player_order_state = preload("res://client/states/PlayerOrderState.gd")
+	var host
+	var client
 	
+	func before_each():
+		host = partial_double(client_scene).instance()
+		stub(host, 'on_send_network_command').to_do_nothing()
+		add_child(host)
+		host.current_state.on_StartButton_pressed()
+		host.current_state.on_HostButton_pressed()
+		host.current_state.get_node("MenuPanel/PlayerNameTextInput").set_input_text("player1")
+		host.current_state.get_node("MenuPanel/GameNameTextInput").set_input_text("lobby1")
+		host.current_state.on_StartButton_pressed()
+		host.current_state.register_player_and_create_game_response({ "status": "success" })
+		watch_signals(host.current_state)
+		
+		client = partial_double(client_scene).instance()
+		stub(client, 'on_send_network_command').to_do_nothing()
+		add_child(client)
+		client.current_state.on_StartButton_pressed()
+		client.current_state.on_JoinButton_pressed()
+		client.current_state.get_node("MenuPanel/PlayerNameTextInput").set_input_text("player2")
+		client.current_state.get_node("MenuPanel/GameNameTextInput").set_input_text("lobby1")
+		client.current_state.on_StartButton_pressed()
+		client.current_state.register_player_and_create_game_response({ "status": "success" })
+		gut.p(str(client.current_state is lobby_state))
+		watch_signals(client.current_state)
+		
+	func after_each():
+		remove_child(host)
+		remove_child(client)
+		
+	func test_start_button_is_invisible_if_not_host():
+		assert_false(client.current_state.get_node("MenuPanel/StartButton").visible)
+		
+	func test_start_button_is_visible_if_host():
+		assert_true(host.current_state.get_node("MenuPanel/StartButton").visible)
+		
+	func test_back_button_transitions_to_main_menu_state():
+		client.current_state.on_BackButton_pressed()
+		assert_true(client.current_state is main_menu_state)
+		
+	func test_displays_players_when_received():
+		client.current_state.get_players_response({
+			"status": "success",
+			"players": [
+				{ "name": "player1", "host": true },
+				{ "name": "player2", "host": false }
+			]
+		})
+		assert_eq(client.current_state.get_node("MenuPanel/LobbyPlayer1").get_player_name(), "player1")
+		assert_true(client.current_state.get_node("MenuPanel/LobbyPlayer1").get_host_indicator())
+		assert_eq(client.current_state.get_node("MenuPanel/LobbyPlayer2").get_player_name(), "player2")
+		assert_false(client.current_state.get_node("MenuPanel/LobbyPlayer2").get_host_indicator())
+		assert_eq(client.current_state.get_node("MenuPanel/LobbyPlayer3").get_player_name(), "")
+		assert_false(client.current_state.get_node("MenuPanel/LobbyPlayer3").get_host_indicator())
+	
+	func test_start_button_sends_signal():
+		client.current_state.on_StartButton_pressed()
+		assert_signal_emitted(client.current_state, "send_network_command")
+		
+	func test_transitions_on_start_game_response():
+		client.current_state.start_game_response({})
+		assert_true(client.current_state is player_order_state)
 
 
