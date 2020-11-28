@@ -20,3 +20,9 @@ func set_character_from_entry(entry):
 	
 func set_status_label(status):
 	$StatusLabel.text = status
+	
+func get_status_label():
+	return $StatusLabel.text
+	
+func get_display_name():
+	return $NameLabel.text

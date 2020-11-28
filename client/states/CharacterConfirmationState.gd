@@ -28,11 +28,11 @@ func confirm_sync_response(response):
 	var player_nodes = []
 	for player_info in self.players:
 		var player = player_scene.instance()
-		player.name = player_info["name"]
-		player.host = player_info["host"]
-		player.mine = player_info["name"] == custom_data["player_name"]
-		player.character_entry = player_info["character_entry"]
-		player.actors.append(actor_scene.instance())
-		player.actors[0].set_character_entry(player.character_entry)
+		player.setup(
+			player_info["name"],
+			player_info["host"],
+			player_info["name"] == custom_data["player_name"],
+			player_info["character_entry"]
+		)
 		grid.place_actor(player.actors[0], Vector2(0, 0))
 	emit_signal("change_state", "TurnGameState", { "grid": grid, "players": player_nodes })
