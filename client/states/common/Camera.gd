@@ -18,13 +18,13 @@ func _input(event):
 func _process(_delta):
 	var factor = Vector2()
 	if Input.is_action_just_pressed("ui_right"):
-		factor.x -= $Constants.tile_size
+		factor.x -= __constants.tile_size
 	if Input.is_action_just_pressed("ui_left"):
-		factor.x += $Constants.tile_size
+		factor.x += __constants.tile_size
 	if Input.is_action_just_pressed("ui_up"):
-		factor.y += $Constants.tile_size
+		factor.y += __constants.tile_size
 	if Input.is_action_just_pressed("ui_down"):
-		factor.y -= $Constants.tile_size
+		factor.y -= __constants.tile_size
 	
 	if factor.length():
 		emit_signal("pan", factor)

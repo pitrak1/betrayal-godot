@@ -97,4 +97,10 @@ func set_position_and_rotation(grid_position, rotation):
 		__doors.push_front(__doors.pop_back())
 	__reorient_doors()
 	
+func has_actor(actor):
+	return actor in __actors
+	
+func has_link(link):
+	return link in __links
+	
 		

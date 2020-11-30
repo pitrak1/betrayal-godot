@@ -54,7 +54,7 @@ func activate_handler(node):
 		var start_room_position
 		for i in range(__constants.grid_dimensions.x):
 			for j in range(__constants.grid_dimensions.y):
-				if __rooms[i][j] is __room_script and __selected in __rooms[i][j].actors:
+				if __rooms[i][j] is __room_script and __rooms[i][j].has_actor(__selected):
 					start_room_position = Vector2(i, j)
 					break
 					
@@ -115,8 +115,8 @@ func move_actor(actor, start_grid_position, end_grid_position):
 	var start_room = __rooms[start_grid_position.x][start_grid_position.y]
 	var end_room = __rooms[end_grid_position.x][end_grid_position.y]
 	assert(start_room is __room_script)
-	assert(actor in start_room.actors)
-	assert(end_room in start_room.links)
+	assert(start_room.has_actor(actor))
+	assert(start_room.has_link(end_room))
 	if end_room is __empty_room_script:
 		emit_signal("change_game_state", "PlaceRoomGameState", { "position": end_grid_position })
 	else:

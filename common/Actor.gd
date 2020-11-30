@@ -32,7 +32,7 @@ func set_character_entry(entry):
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed():
-		if __is_in_bounds(event.global_position):
+		if is_in_bounds(event.global_position):
 			emit_signal("select", self)
 			
 func select_handler(node):
@@ -41,6 +41,6 @@ func select_handler(node):
 	else:
 		$SelectedSprite.hide()
 
-func __is_in_bounds(position):
+func is_in_bounds(position):
 	var scaling_factor = _constants.actor_size / 2 * global_scale.x
 	return global_position.distance_to(position) < scaling_factor
