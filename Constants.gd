@@ -157,7 +157,8 @@ export var characters = [
 		'sanity_index': 3,
 		'knowledge': [0, 2, 3, 3, 4, 5, 6, 7, 8],
 		'knowledge_index': 5,
-		'related': ['jenny_leclerc']
+		'related': ['jenny_leclerc'],
+		'status': ''
 	},
 	{
 		'display_name': 'Jenny LeClerc',
@@ -171,7 +172,8 @@ export var characters = [
 		'sanity_index': 5,
 		'knowledge': [0, 2, 3, 3, 4, 4, 5, 6, 8],
 		'knowledge_index': 3,
-		'related': ['heather_granville']
+		'related': ['heather_granville'],
+		'status': ''
 	},
 	{
 		'display_name': 'Madame Zostra',
@@ -185,7 +187,8 @@ export var characters = [
 		'sanity_index': 3,
 		'knowledge': [0, 1, 3, 4, 4, 4, 5, 6, 6],
 		'knowledge_index': 4,
-		'related': ['vivian_lopez']
+		'related': ['vivian_lopez'],
+		'status': ''
 	},
 	{
 		'display_name': 'Vivian Lopez',
@@ -199,7 +202,8 @@ export var characters = [
 		'sanity_index': 3,
 		'knowledge': [0, 4, 5, 5, 5, 5, 6, 6, 7],
 		'knowledge_index': 4,
-		'related': ['madame_zostra']
+		'related': ['madame_zostra'],
+		'status': ''
 	},
 	{
 		'display_name': 'Brandon Jaspers',
@@ -213,7 +217,8 @@ export var characters = [
 		'sanity_index': 4,
 		'knowledge': [0, 1, 3, 3, 5, 5, 6, 6, 7],
 		'knowledge_index': 3,
-		'related': ['peter_akimoto']
+		'related': ['peter_akimoto'],
+		'status': ''
 	},
 	{
 		'display_name': 'Peter Akimoto',
@@ -227,7 +232,8 @@ export var characters = [
 		'sanity_index': 4,
 		'knowledge': [0, 3, 4, 4, 5, 6, 7, 7, 8],
 		'knowledge_index': 3,
-		'related': ['brandon_jaspers']
+		'related': ['brandon_jaspers'],
+		'status': ''
 	},
 	{
 		'display_name': 'Darrin Williams',
@@ -241,7 +247,8 @@ export var characters = [
 		'sanity_index': 3,
 		'knowledge': [0, 2, 3, 3, 4, 5, 5, 5, 7],
 		'knowledge_index': 3,
-		'related': ['ox_bellows']
+		'related': ['ox_bellows'],
+		'status': ''
 	},
 	{
 		'display_name': 'Ox Bellows',
@@ -255,7 +262,8 @@ export var characters = [
 		'sanity_index': 3,
 		'knowledge': [0, 2, 2, 3, 3, 5, 5, 6, 6],
 		'knowledge_index': 3,
-		'related': ['darrin_williams']
+		'related': ['darrin_williams'],
+		'status': ''
 	},
 	{
 		'display_name': 'Zoe Ingstrom',
@@ -269,7 +277,8 @@ export var characters = [
 		'sanity_index': 3,
 		'knowledge': [0, 1, 2, 3, 4, 4, 5, 5, 5],
 		'knowledge_index': 3,
-		'related': ['missy_dubourde']
+		'related': ['missy_dubourde'],
+		'status': ''
 	},
 	{
 		'display_name': 'Missy Dubourde',
@@ -283,7 +292,8 @@ export var characters = [
 		'sanity_index': 3,
 		'knowledge': [0, 2, 3, 4, 4, 5, 6, 6, 6],
 		'knowledge_index': 4,
-		'related': ['zoe_ingstrom']
+		'related': ['zoe_ingstrom'],
+		'status': ''
 	},
 	{
 		'display_name': 'Professor Longfellow',
@@ -297,7 +307,8 @@ export var characters = [
 		'sanity_index': 3,
 		'knowledge': [0, 4, 5, 5, 5, 5, 6, 7, 8],
 		'knowledge_index': 5,
-		'related': ['father_rhinehardt']
+		'related': ['father_rhinehardt'],
+		'status': ''
 	},
 	{
 		'display_name': 'Father Rhinehardt',
@@ -311,6 +322,10 @@ export var characters = [
 		'sanity_index': 5,
 		'knowledge': [0, 1, 3, 3, 4, 5, 6, 6, 8],
 		'knowledge_index': 4,
-		'related': ['professor_longfellow']
+		'related': ['professor_longfellow'],
+		'status': ''
 	}
 ]
+
+export var ip_address = "localhost"
+export var port = 8910

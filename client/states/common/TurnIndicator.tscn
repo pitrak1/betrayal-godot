@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://client/states/common/TurnIndicator.gd" type="Script" id=1]
+
+[node name="TurnIndicator" type="Label"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -590.0
+margin_top = -110.0
+margin_right = -340.0
+margin_bottom = -80.0
+rect_scale = Vector2( 2, 2 )
+align = 1
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

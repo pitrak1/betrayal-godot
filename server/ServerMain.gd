@@ -1,44 +1,44 @@
 extends Node
 
-signal log_string(string)
+const __constants_script = preload("res://Constants.gd")
+const __player_scene = preload("res://common/Player.tscn")
+const __game_scene = preload("res://server/Game.tscn")
 
-var player_scene = preload("res://common/Player.tscn")
-var game_scene = preload("res://server/Game.tscn")
-
-var players = {}
-var games = {}
+var __players = {}
+var __games = {}
+var __constants
 
 func _ready():
+	__constants = __constants_script.new()
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_server(8910, 6)
 	get_tree().network_peer = peer
 	
 func handle_incoming_network_command(command_type, sender_id, data):
-	if sender_id in players.keys() and players[sender_id].game:
-		return players[sender_id].game.call(command_type, sender_id, data)
+	if sender_id in __players.keys() and __players[sender_id].get_game():
+		return __players[sender_id].get_game().call(command_type, sender_id, data)
 	else:
 		return self.call(command_type, sender_id, data)
 		
 	
 func __create_player(id, name, host):
-	var player = player_scene.instance()
-	player.name = name
-	player.id = id
-	player.host = host
-	players[id] = player
+	var player = __player_scene.instance()
+	player.setup(name, host, null, null, id)
+	__players[id] = player
 	return player
 	
 func __create_game(name):
-	var game = game_scene.instance()
+	var game = __game_scene.instance()
 	game.name = name
-	games[name] = game
+	game.setup()
+	__games[name] = game
 	return game
 	
 func register_player_and_create_game(id, data):
 	var result = { "response_type": "return", "response": {} }
-	if id in players.keys():
+	if id in __players.keys():
 		result["response"]["status"] = "invalid_player_name"
-	elif data["game_name"] in games.keys():
+	elif data["game_name"] in __games.keys():
 		result["response"]["status"] = "invalid_game_name"
 	else:
 		result["response"]["status"] = "success"
@@ -49,12 +49,12 @@ func register_player_and_create_game(id, data):
 
 func register_player_and_join_game(id, data):
 	var result = { "response_type": "return", "response": {} }
-	if id in players.keys():
+	if id in __players.keys():
 		result["response"]["status"] = "invalid_player_name"
-	elif not data["game_name"] in games.keys():
+	elif not data["game_name"] in __games.keys():
 		result["response"]["status"] = "invalid_game_name"
 	else:
 		result["response"]["status"] = "success"
 		var player = __create_player(id, data["player_name"], false)
-		games[data["game_name"]].add_player(player)
+		__games[data["game_name"]].add_player(player)
 	return result

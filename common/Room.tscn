@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/rooms.jpg" type="Texture" id=1]
 [ext_resource path="res://common/Room.gd" type="Script" id=2]
 [ext_resource path="res://assets/room_selected.png" type="Texture" id=3]
-[ext_resource path="res://common/Constants.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/door.png" type="Texture" id=5]
 
 [node name="Room" type="Node2D" groups=[
@@ -21,8 +20,6 @@ region_rect = Rect2( 0, 0, 512, 512 )
 
 [node name="SelectedSprite" type="Sprite" parent="."]
 texture = ExtResource( 3 )
-
-[node name="Constants" parent="." instance=ExtResource( 4 )]
 
 [node name="UpDoorSprite" type="Sprite" parent="."]
 position = Vector2( 0, -190 )

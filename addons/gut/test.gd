@@ -617,6 +617,10 @@ func assert_signal_emitted_with_parameters(object, signal_name, parameters, inde
 			var text = str('Object ', object, ' did not emit signal [', signal_name, ']')
 			_fail(_get_fail_msg_including_emitted_signals(text, object))
 
+func get_signal_emission_parameters(object, signal_name, index=-1):
+	if(_can_make_signal_assertions(object, signal_name) and _signal_watcher.did_emit(object, signal_name)):
+		return _signal_watcher.get_signal_parameters(object, signal_name, index)
+
 # ------------------------------------------------------------------------------
 # Assert that a signal has been emitted a specific number of times.
 #

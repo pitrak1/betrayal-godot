@@ -1,25 +1,28 @@
 extends Node
 
-export (PackedScene) var Room
-var stack = []
+const __room_scene = preload("res://common/Room.tscn")
+const __constants_script = preload("res://Constants.gd")
+var __stack = []
+var __constants
 	
 func setup():
-	for r in $Constants.rooms:
-		var room = Room.instance()
+	__constants = __constants_script.new()
+	for r in __constants.rooms:
+		var room = __room_scene.instance()
 		room.initialize(r)
-		stack.append(room)
-	stack.shuffle()
+		__stack.append(room)
+	__stack.shuffle()
 		
 func get_by_key(key):
 	var room
-	for r in stack:
-		if key == r.key:
+	for r in __stack:
+		if key == r.get_key():
 			room = r
 			break
-	stack.erase(room)
+	__stack.erase(room)
 	return room
 	
 func get_next():
-	return stack.pop_front()
+	return __stack.pop_front()
 
 

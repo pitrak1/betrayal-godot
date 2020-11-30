@@ -11,6 +11,8 @@
 [ext_resource path="res://client/states/TurnGameState.tscn" type="PackedScene" id=9]
 [ext_resource path="res://client/states/PlaceRoomGameState.tscn" type="PackedScene" id=10]
 
+
+
 [node name="ClientMain" type="Node"]
 script = ExtResource( 5 )
 

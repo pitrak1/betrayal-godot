@@ -1,54 +1,56 @@
-extends "res://common/State.gd"
+extends "res://client/State.gd"
 
-var character_index = 0
-var unavailable_characters = []
+const __turn_manager_script = preload("res://common/TurnManager.gd")
+var __character_index
+var __characters
+var __unavailable_characters = []
 
 func enter(custom_data):
-	self.custom_data = custom_data
-	emit_signal("log_string", "Entering CharacterSelectionState...")
+	.enter(custom_data)
+	
 	$SelectButton.connect("pressed", self, "on_SelectButton_pressed")
 	$LeftButton.connect("pressed", self, "on_LeftButton_pressed")
 	$RightButton.connect("pressed", self, "on_RightButton_pressed")
+	
 	emit_signal("send_network_command", "get_current_player", {})
-	var entry = $Constants.characters[character_index]
-	$CharacterInfoPanel/ActorInfo.set_character_from_entry(entry)
-	$CharacterInfoPanel/ActorInfo.set_status_label("")
+	
+	__character_index = __turn_manager_script.new(_constants.characters.size())
+	__characters = _constants.characters.duplicate(true)
+	$TurnIndicator.setup(_custom_data["player_name"])
+	self.__redraw()
 	
 func get_current_player_response(response):
-	if response["current_player"] == custom_data["player_name"]:
-		$SelectButton.visible = true
-		$PlayerLabel.text = "You are selecting."
-	else:
-		$SelectButton.visible = false
-		$PlayerLabel.text = response["current_player"] + " is selecting."
+	$TurnIndicator.set_player(response["current_player"])
+	$SelectButton.visible = response["current_player"] == _custom_data["player_name"]
 	__redraw()
 	
 func on_SelectButton_pressed():
-	emit_signal("send_network_command", "select_character", { "character_index": character_index })
+	emit_signal(
+		"send_network_command", 
+		"select_character", 
+		{ "character_index": __character_index.get_index() }
+	)
 	
 func select_character_response(response):
 	if response["all_selected"]:
-		emit_signal("change_state", "CharacterConfirmationState", custom_data)
+		emit_signal(
+			"change_state", 
+			"CharacterConfirmationState", 
+			_custom_data
+		)
 	else:
-		unavailable_characters = response["unavailable_characters"]
+		for index in response["unavailable_characters"]:
+			__characters[index]["status"] = "UNAVAILABLE"
 		emit_signal("send_network_command", "get_current_player", {})
 	
 func on_LeftButton_pressed():
-	character_index -= 1
-	if character_index < 0:
-		character_index = $Constants.characters.size() - 1
+	__character_index.previous()
 	__redraw()
 	
 func on_RightButton_pressed():
-	character_index += 1
-	if character_index > $Constants.characters.size() - 1:
-		character_index = 0
+	__character_index.next()
 	__redraw()
 		
 func __redraw():
-	var entry = $Constants.characters[character_index]
-	$CharacterInfoPanel/ActorInfo.set_character_from_entry(entry)
-	if character_index in unavailable_characters:
-		$CharacterInfoPanel/ActorInfo.set_status_label("UNAVAILABLE")
-	else:
-		$CharacterInfoPanel/ActorInfo.set_status_label("")
+	var entry = __characters[__character_index.get_index()]
+	$ActorInfo.set_character_from_entry(entry)

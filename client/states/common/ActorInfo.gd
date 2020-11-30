@@ -17,6 +17,7 @@ func set_character_from_entry(entry):
 	$KnowledgeAttribute.set_attribute_index(entry["knowledge_index"])
 	$SanityAttribute.set_attribute_values(entry["sanity"])
 	$SanityAttribute.set_attribute_index(entry["sanity_index"])
+	$StatusLabel.text = entry["status"]
 	
 func set_status_label(status):
 	$StatusLabel.text = status

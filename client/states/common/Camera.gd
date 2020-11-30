@@ -3,13 +3,19 @@ extends Node
 signal zoom(factor)
 signal pan(factor)
 
+const __constants_script = preload("res://Constants.gd")
+var __constants
+
+func _ready():
+	__constants = __constants_script.new()
+
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_WHEEL_UP:
 		emit_signal("zoom", 0.2)
 	if event is InputEventMouseButton and event.button_index == BUTTON_WHEEL_DOWN:
 		emit_signal("zoom", -0.2)
 	
-func _process(delta):
+func _process(_delta):
 	var factor = Vector2()
 	if Input.is_action_just_pressed("ui_right"):
 		factor.x -= $Constants.tile_size

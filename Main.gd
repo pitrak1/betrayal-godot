@@ -16,10 +16,10 @@ func _ready():
 		emit_signal("log_string", "Starting client...")
 		__create_scene(client_scene)
 	else:
-		emit_signal("log_string", "Starting client by default...")
-		__create_scene(client_scene)
-#		emit_signal("log_string", "Starting server by default...")
-#		__create_scene(server_scene)
+#		emit_signal("log_string", "Starting client by default...")
+#		__create_scene(client_scene)
+		emit_signal("log_string", "Starting server by default...")
+		__create_scene(server_scene)
 		
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
@@ -65,7 +65,7 @@ remote func server_handle_incoming_network_command(command_type, data):
 		rpc_id(sender_id, "client_handle_incoming_network_response", command_type, result["response"])
 	elif result["response_type"] == "broadcast":
 		for player in result["players"]:
-			rpc_id(player.id, "client_handle_incoming_network_response", command_type, result["response"])
+			rpc_id(player.get_id(), "client_handle_incoming_network_response", command_type, result["response"])
 			
 func client_handle_outgoing_network_command(command_type, data):
 	emit_signal("log_string", "Sending " + command_type + " command...")

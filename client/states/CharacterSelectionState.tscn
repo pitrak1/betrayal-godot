@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://client/states/CharacterSelectionState.gd" type="Script" id=1]
-[ext_resource path="res://common/GameBackground.tscn" type="PackedScene" id=2]
+[ext_resource path="res://client/states/common/GameBackground.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/grey_panel.png" type="Texture" id=3]
-[ext_resource path="res://common/ActorInfo.tscn" type="PackedScene" id=4]
+[ext_resource path="res://client/states/common/ActorInfo.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/right_arrow.png" type="Texture" id=5]
-[ext_resource path="res://common/Constants.tscn" type="PackedScene" id=6]
+[ext_resource path="res://client/states/common/TurnIndicator.tscn" type="PackedScene" id=6]
 
 [node name="CharacterSelectionState" type="Control"]
 anchor_right = 1.0
@@ -39,9 +39,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ActorInfo" parent="CharacterInfoPanel" instance=ExtResource( 4 )]
-anchor_left = 0.0
-margin_left = 0.0
+[node name="ActorInfo" parent="." instance=ExtResource( 4 )]
+anchor_left = 0.5
+anchor_top = 0.501
+anchor_right = 0.5
+anchor_bottom = 0.501
+margin_left = 120.0
+margin_top = -340.72
+margin_right = 320.0
+margin_bottom = 340.28
 
 [node name="RightButton" type="Button" parent="."]
 anchor_left = 0.5
@@ -89,20 +95,4 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayerLabel" type="Label" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -590.0
-margin_top = -110.0
-margin_right = -340.0
-margin_bottom = -80.0
-rect_scale = Vector2( 2, 2 )
-text = "You are currently selecting."
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Constants" parent="." instance=ExtResource( 6 )]
+[node name="TurnIndicator" parent="." instance=ExtResource( 6 )]

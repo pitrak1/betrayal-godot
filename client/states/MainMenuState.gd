@@ -1,7 +1,7 @@
-extends "res://common/State.gd"
+extends "res://client/State.gd"
 
 func enter(custom_data):
-	emit_signal("log_string", "Entering MainMenuState...")
+	.enter(custom_data)
 	$MenuPanel/HostButton.connect("pressed", self, "on_HostButton_pressed")
 	$MenuPanel/JoinButton.connect("pressed", self, "on_JoinButton_pressed")
 	$MenuPanel/ExitButton.connect("pressed", self, "on_ExitButton_pressed")
