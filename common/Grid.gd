@@ -8,14 +8,12 @@ const __room_script = preload("res://common/Room.gd")
 const __empty_room_scene = preload("res://common/EmptyRoom.tscn")
 const __empty_room_script = preload("res://common/EmptyRoom.gd")
 const __constants_script = preload("res://Constants.gd")
-var __room_entries
 var __rooms
 var __selected
 var __constants
 	
 func setup():
 	__constants = __constants_script.new()
-	__room_entries = __constants.rooms.duplicate()
 	$RoomStack.setup()
 	__initialize_rooms()
 	__place_starting_rooms()
