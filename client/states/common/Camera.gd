@@ -14,7 +14,12 @@ func _input(event):
 		emit_signal("zoom", 0.2)
 	if event is InputEventMouseButton and event.button_index == BUTTON_WHEEL_DOWN:
 		emit_signal("zoom", -0.2)
-	
+		
+	if event is InputEventKey and event.pressed and event.scancode == KEY_W and event.shift:
+		emit_signal("zoom", 0.2)
+	if event is InputEventKey and event.pressed and event.scancode == KEY_S and event.shift:
+		emit_signal("zoom", -0.2)
+		
 func _process(_delta):
 	var factor = Vector2()
 	if Input.is_action_just_pressed("ui_right"):
