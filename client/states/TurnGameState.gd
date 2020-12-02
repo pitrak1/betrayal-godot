@@ -10,7 +10,7 @@ var __selected
 func enter(custom_data):
 	.enter(custom_data)
 	add_child(_grid)
-	_grid.connect("change_game_state", self, "on_change_game_state")
+	_grid.set_current_state(self)
 	add_child(_room_stack)
 	
 func select_handler(node):
@@ -28,10 +28,10 @@ func move_actor(actor, start_grid_position, end_grid_position):
 	var end_room = _grid.get_room(end_grid_position)
 	assert(start_room is __room_script)
 	assert(start_room.has_actor(actor))
-	assert(end_room in start_room.links)
-	if end_room is __empty_room_script:
+	assert(start_room.has_link(end_room) or start_room == end_room)
+	if not end_room is __room_script:
 		print("TEST TEST TEST")
 #		emit_signal("change_game_state", "PlaceRoomGameState", { "position": end_grid_position })
 	else:
-		_grid.remove_actor(actor)
-		_grid.place_actor(actor)
+		_grid.remove_actor(actor, start_grid_position)
+		_grid.place_actor(actor, end_grid_position)

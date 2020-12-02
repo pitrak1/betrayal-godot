@@ -6,6 +6,7 @@ const __constants_script = preload("res://Constants.gd")
 var __rooms
 var __selected
 var __constants
+var __current_state
 	
 func setup(room_stack):
 	__constants = __constants_script.new()
@@ -39,6 +40,15 @@ func on_Camera_zoom(factor):
 	
 func on_Camera_pan(factor):
 	position += factor * scale.x
+	
+func set_current_state(state):
+	__current_state = state
+	
+func select_handler(node):
+	__current_state.select_handler(node)
+	
+func activate_handler(node):
+	__current_state.activate_handler(node)
 		
 func place_room(room, grid_position, rotation=0):
 	if __rooms[grid_position.x][grid_position.y]:
@@ -46,8 +56,8 @@ func place_room(room, grid_position, rotation=0):
 	add_child(room)
 	room.set_position_and_rotation(grid_position, rotation)
 	__rooms[grid_position.x][grid_position.y] = room
-	room.connect("select", self.get_parent(), "select_handler")
-	room.connect("activate", self.get_parent(), "activate_handler")
+	room.connect("select", self, "select_handler")
+	room.connect("activate", self, "activate_handler")
 
 	if grid_position.y > 0:
 		var up_room = __rooms[grid_position.x][grid_position.y - 1]
@@ -99,8 +109,8 @@ func remove_room(grid_position, replace_with_empty=true):
 	remove_child(room)
 	room.clear_position_and_rotation()
 	__rooms[grid_position.x][grid_position.y] = null
-	room.disconnect("select", self.get_parent(), "select_handler")
-	room.disconnect("activate", self.get_parent(), "activate_handler")
+	room.disconnect("select", self, "select_handler")
+	room.disconnect("activate", self, "activate_handler")
 	
 	if replace_with_empty:
 		var empty_room = __empty_room_scene.instance()
@@ -113,16 +123,16 @@ func place_actor(actor, grid_position):
 	var room = __rooms[grid_position.x][grid_position.y]
 	assert(room is __room_script)
 	room.add_actor(actor)
-	actor.connect("select", get_parent(), "select_handler")
-	actor.connect("activate", get_parent(), "activate_handler")
+	actor.connect("select", self, "select_handler")
+	actor.connect("activate", self, "activate_handler")
 
 func remove_actor(actor, grid_position):
 	var room = __rooms[grid_position.x][grid_position.y]
 	assert(room is __room_script)
 	assert(room.has_actor(actor))
 	room.remove_actor(actor)
-	actor.disconnect("select", get_parent(), "select_handler")
-	actor.disconnect("activate", get_parent(), "activate_handler")
+	actor.disconnect("select", self, "select_handler")
+	actor.disconnect("activate", self, "activate_handler")
 	
 func get_room(grid_position):
 	return __rooms[grid_position.x][grid_position.y]
