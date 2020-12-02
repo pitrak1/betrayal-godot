@@ -4,6 +4,7 @@ const __constants_script = preload("res://Constants.gd")
 const __player_scene = preload("res://common/Player.tscn")
 const __game_scene = preload("res://server/Game.tscn")
 
+
 var __players = {}
 var __games = {}
 var __constants

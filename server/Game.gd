@@ -1,26 +1,24 @@
 extends Node
 
+const __turn_manager_script = preload("res://common/TurnManager.gd")
 const __constants_script = preload("res://Constants.gd")
 var __players = []
-var __waiting = 0
-var __current_player_index = 0
+var __waiting_index = 0
+var __current_player_index
 var __unavailable_characters = []
 var __constants
 
-func _ready():
-	__constants = __constants_script.new()
-	
 func setup():
 	__constants = __constants_script.new()
 	
 func add_player(player):
 	player.set_game(self)
 	__players.append(player)
+	__waiting_index = __turn_manager_script.new(__players.size())
+	__current_player_index = __turn_manager_script.new(__players.size())
 	
 func confirm_sync(_id, _data):
-	__waiting += 1
-	if __waiting >= __players.size():
-		__waiting= 0
+	if __waiting_index.next():
 		return { 
 			"response_type": "broadcast", 
 			"response": { "status": "success" }, 
@@ -65,7 +63,7 @@ func get_current_player(_id, _data):
 		"response_type": "return", 
 		"response": { 
 			"status": "success", 
-			"current_player": __players[__current_player_index].name
+			"current_player": __players[__current_player_index.get_index()].name
 		}
 	}
 	
@@ -81,11 +79,7 @@ func select_character(id, data):
 		if id == p.get_id():
 			p.set_character_entry(__constants.characters[data["character_index"]])
 	
-	var all_selected = false
-	__current_player_index += 1
-	if __current_player_index >= __players.size():
-		__current_player_index = 0
-		all_selected = true
+	var all_selected = __current_player_index.next()
 
 	return {
 		"response_type": "broadcast",
