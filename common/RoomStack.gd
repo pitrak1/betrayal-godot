@@ -9,14 +9,14 @@ func setup():
 	__constants = __constants_script.new()
 	for r in __constants.rooms:
 		var room = __room_scene.instance()
-		room.initialize(r)
+		room.setup(r)
 		__stack.append(room)
 	__stack.shuffle()
 		
 func get_by_key(key):
 	var room
 	for r in __stack:
-		if key == r.get_key():
+		if key == r.key:
 			room = r
 			break
 	__stack.erase(room)

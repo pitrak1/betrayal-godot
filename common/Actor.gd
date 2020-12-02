@@ -1,6 +1,7 @@
 extends Node2D
 
 signal select(node)
+signal activate(node)
 
 const __constants_script = preload("res://Constants.gd")
 
@@ -14,6 +15,7 @@ var __knowledge_index = 0
 var __sanity_values = []
 var __sanity_index = 0
 var _constants
+var grid_position
 
 func _ready():
 	$SelectedSprite.hide()

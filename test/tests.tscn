@@ -11,4 +11,5 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 _include_subdirectories = true
-_directory1 = "res://test/client/states"
+_directory1 = "res://test/integration"
+_directory2 = "res://test/unit"

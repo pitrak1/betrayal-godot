@@ -14,6 +14,8 @@ var _player_name
 var _game_name
 var _constants
 var _grid
+var _players
+var _room_stack
 
 func enter(custom_data):
 	emit_signal("log_string", "Entering " + self.name + "...")
@@ -26,6 +28,10 @@ func enter(custom_data):
 		_game_name = custom_data["game_name"]
 	if "grid" in custom_data.keys():
 		_grid = custom_data["grid"]
+	if "players" in custom_data.keys():
+		_players = custom_data["players"]
+	if "room_stack" in custom_data.keys():
+		_room_stack = custom_data["room_stack"]
 	_constants = __constants_script.new()
 
 func exit():

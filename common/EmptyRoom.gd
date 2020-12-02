@@ -6,12 +6,25 @@ signal select(node)
 const __constants_script = preload("res://Constants.gd")
 var _constants
 var __actors = []
+var grid_position
 
 func _ready():
 	_constants = __constants_script.new()
 	
+func setup(entry=null):
+	_constants = __constants_script.new()
+	
 func has_door(direction):
 	return true
+	
+func has_link(room):
+	return true
+	
+func add_link(room):
+	pass
+	
+func remove_link(room):
+	pass
 
 func _input(event):
 	if event is InputEventMouseButton and is_in_bounds(event.global_position):
@@ -31,7 +44,12 @@ func is_in_bounds(position):
 	return within_x_bounds and within_y_bounds
 	
 func set_position_and_rotation(grid_position, rotation=0):
+	self.grid_position = grid_position
 	self.position = Vector2(grid_position.x * _constants.tile_size, grid_position.y * _constants.tile_size)
+
+func clear_position_and_rotation():
+	grid_position = null
+	rotation = 0
 	
 func select_handler(node):
 	if node == self:

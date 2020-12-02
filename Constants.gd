@@ -129,17 +129,17 @@ export var rooms = [
 export var starting_rooms = [
 	{
 		"key": "grand_staircase",
-		"position": Vector2(0, -2),
+		"position": Vector2(3, 3),
 		"rotation": PI/2
 	},
 	{
 		"key": "foyer",
-		"position": Vector2(0, -1),
+		"position": Vector2(3, 4),
 		"rotation": PI/2
 	},
 	{
 		"key": "entrance_hall",
-		"position": Vector2(0, 0),
+		"position": Vector2(3, 5),
 		"rotation": PI/2
 	}
 ]

@@ -19,6 +19,7 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 512, 512 )
 
 [node name="SelectedSprite" type="Sprite" parent="."]
+visible = false
 texture = ExtResource( 3 )
 
 [node name="UpDoorSprite" type="Sprite" parent="."]

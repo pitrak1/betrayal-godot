@@ -9,12 +9,13 @@ var __actor_positioning = [
 	[Vector2(-100, -100), Vector2(100, -100), Vector2(-100, 100), Vector2(100, 100)]
 ]
 var __doors = []
-var links = []
+var __links = []
 
-func setup(entry):
+func setup(entry=null):
+	_constants = __constants_script.new()
 	name = entry["name"]
 	key = entry["key"]
-	__doors = entry["doors"]
+	__doors = entry["doors"].duplicate()
 
 	$RoomSprite.region_enabled = true
 	$RoomSprite.region_rect = Rect2(
@@ -28,6 +29,15 @@ func setup(entry):
 func has_door(direction):
 	return __doors[direction]
 	
+func has_link(room):
+	return room in __links
+	
+func add_link(room):
+	__links.append(room)
+	
+func remove_link(room):
+	__links.erase(room)
+	
 func __display_doors():
 	$UpDoorSprite.visible = __doors[_constants.UP]
 	$RightDoorSprite.visible = __doors[_constants.RIGHT]
@@ -37,11 +47,13 @@ func __display_doors():
 func add_actor(actor):
 	__actors.append(actor)
 	add_child(actor)
+	actor.grid_position = grid_position
 	__position_actors()
 	
 func remove_actor(actor):
 	__actors.erase(actor)
 	remove_child(actor)
+	actor.grid_position = null
 	__position_actors()
 	
 func has_actor(actor):

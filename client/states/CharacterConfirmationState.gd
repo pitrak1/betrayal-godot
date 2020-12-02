@@ -1,5 +1,6 @@
 extends "res://client/State.gd"
 
+const __room_stack = preload("res://common/RoomStack.tscn")
 const __grid_scene = preload("res://common/Grid.tscn")
 const __player_scene = preload("res://common/Player.tscn")
 const __actor_scene = preload("res://common/Actor.tscn")
@@ -27,8 +28,22 @@ func on_ContinueButton_pressed():
 	
 func confirm_sync_response(_response):
 	emit_signal("log_string", "Handling confirm_sync_response...")
+	
+	var room_stack = __room_stack.instance()
+	room_stack.setup()
+	
 	var grid = __grid_scene.instance()
-	grid.setup()
+	grid.setup(room_stack)
+	
+	var player_nodes = __setup_players(grid)
+	
+	emit_signal(
+		"change_state", 
+		"TurnGameState", 
+		{ "grid": grid, "players": player_nodes, "room_stack": room_stack }
+	)	
+	
+func __setup_players(grid):
 	var player_nodes = []
 	for player_info in __players:
 		var player = __player_scene.instance()
@@ -38,9 +53,5 @@ func confirm_sync_response(_response):
 			player_info["character_entry"],
 			player_info["name"] == _custom_data["player_name"]
 		)
-		grid.place_actor(player.get_primary_actor(), Vector2(0, 0))
-	emit_signal(
-		"change_state", 
-		"TurnGameState", 
-		{ "grid": grid, "players": player_nodes }
-	)
+		grid.place_actor(player.get_primary_actor(), Vector2(3, 5))
+	return player_nodes
