@@ -100,15 +100,15 @@ class TestPlaceRoom:
 		assert_true(room.has_door(constants.DOWN))
 		assert_false(room.has_door(constants.LEFT))
 
-	func test_connects_select_signal_to_parent():
+	func test_connects_select_signal():
 		var room = room_stack.get_by_key("underground_lake")
 		grid.place_room(room, Vector2(4, 5))
-		assert_connected(room, self, "select", "select_handler")
+		assert_connected(room, grid, "select", "select_handler")
 
-	func test_connects_activate_signal_to_parent():
+	func test_connects_activate_signal():
 		var room = room_stack.get_by_key("underground_lake")
 		grid.place_room(room, Vector2(4, 5))
-		assert_connected(room, self, "activate", "activate_handler")
+		assert_connected(room, grid, "activate", "activate_handler")
 
 	func test_places_links_to_adjacent_tiles_if_appropriate_doors():
 		assert_true(grid.get_room(Vector2(3, 3)).has_link(grid.get_room(Vector2(3, 4))))
@@ -207,11 +207,11 @@ class TestPlaceActor:
 	func test_adds_actor_to_room():
 		assert_true(grid.get_room(Vector2(3, 4)).has_actor(actor))
 		
-	func test_connects_select_signal_to_parent():
-		assert_connected(actor, self, "select", "select_handler")
+	func test_connects_select_signal():
+		assert_connected(actor, grid, "select", "select_handler")
 
-	func test_connects_activate_signal_to_parent():
-		assert_connected(actor, self, "activate", "activate_handler")
+	func test_connects_activate_signal():
+		assert_connected(actor, grid, "activate", "activate_handler")
 		
 
 class TestRemoveActor:

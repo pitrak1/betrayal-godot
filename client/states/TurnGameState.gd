@@ -18,20 +18,22 @@ func select_handler(node):
 	get_tree().call_group("selectable", "select_handler", node)
 
 func activate_handler(node):
-	if __selected is __actor_script:
-		var start_room_position = __selected.grid_position
-		var end_room_position = node.grid_position
-		move_actor(__selected, start_room_position, end_room_position)
+	if __selected is __actor_script and node is __room_script:
+		move_actor(__selected, __selected.grid_position, node.grid_position)
 		
 func move_actor(actor, start_grid_position, end_grid_position):
 	var start_room = _grid.get_room(start_grid_position)
 	var end_room = _grid.get_room(end_grid_position)
-	assert(start_room is __room_script)
 	assert(start_room.has_actor(actor))
 	assert(start_room.has_link(end_room) or start_room == end_room)
 	if not end_room is __room_script:
 		print("TEST TEST TEST")
 #		emit_signal("change_game_state", "PlaceRoomGameState", { "position": end_grid_position })
 	else:
-		_grid.remove_actor(actor, start_grid_position)
-		_grid.place_actor(actor, end_grid_position)
+		emit_signal("send_network_command", "move_actor", { "start_grid_position": start_grid_position, "actor_key": actor.key, "end_grid_position": end_grid_position })
+
+func move_actor_response(response):
+	var start_room = _grid.get_room(response["start_grid_position"])
+	var actor = start_room.get_actor_by_key(response["actor_key"])
+	_grid.remove_actor(actor, response["start_grid_position"])
+	_grid.place_actor(actor, response["end_grid_position"])

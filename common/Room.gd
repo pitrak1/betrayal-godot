@@ -59,6 +59,12 @@ func remove_actor(actor):
 func has_actor(actor):
 	return actor in __actors
 	
+func get_actor_by_key(key):
+	for actor in __actors:
+		if actor.key == key:
+			return actor
+	return null
+	
 func __position_actors():
 	var positions = __actor_positioning[__actors.size()]
 	for i in range(__actors.size()):

@@ -5,7 +5,7 @@ signal activate(node)
 
 const __constants_script = preload("res://Constants.gd")
 
-var __key
+var key
 var __might_values = []
 var __might_index = 0
 var __speed_values = []

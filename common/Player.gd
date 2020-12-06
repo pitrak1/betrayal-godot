@@ -12,6 +12,9 @@ var __mine = false
 func _ready():
 	pass
 	
+func has_actor(actor):
+	return actor in __actors
+	
 func get_primary_actor():
 	return __actors[0]
 	
@@ -42,5 +45,10 @@ func setup(name, host, character_entry=null, mine=false, id=null):
 	
 	__actors.append(__actor_scene.instance())
 	if character_entry:
+		__actors[0].set_character_entry(__character_entry)
+		
+func create_primary_actor():
+	__actors.push_front(__actor_scene.instance())
+	if __character_entry:
 		__actors[0].set_character_entry(__character_entry)
 	
