@@ -44,5 +44,5 @@ func select_handler(node):
 		$SelectedSprite.hide()
 
 func is_in_bounds(position):
-	var scaling_factor = _constants.actor_size / 2 * global_scale.x
+	var scaling_factor = _constants.actor_size / 2
 	return global_position.distance_to(position) < scaling_factor

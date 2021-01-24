@@ -1,5 +1,16 @@
 extends Camera2D
 
+const __constants_script = preload("res://Constants.gd")
+
+var __constants
+
+func _ready():
+	__constants = __constants_script.new()
+	self.position = Vector2(
+		__constants.starting_grid_position.x, 
+		__constants.starting_grid_position.y
+	) * __constants.tile_size + Vector2(640 + 256, 360)
+	
 func _process(_delta):
 	var factor = Vector2()
 	if Input.is_action_just_pressed("ui_right"):
@@ -12,7 +23,7 @@ func _process(_delta):
 		factor.y += 256
 	
 	if factor.length():
-		self.position += factor * scale
+		self.position += factor
 		
 	if Input.is_action_just_pressed("ui_zoom_out"):
 		self.zoom -= Vector2(0.2, 0.2)

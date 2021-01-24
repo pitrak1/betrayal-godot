@@ -329,3 +329,5 @@ export var characters = [
 
 export var ip_address = "localhost"
 export var port = 8910
+
+export var starting_grid_position = Vector2(3, 5)

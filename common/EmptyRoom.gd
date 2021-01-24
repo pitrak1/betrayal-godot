@@ -38,7 +38,7 @@ func is_in_bounds(position):
 		if actor.is_in_bounds(position):
 			return false
 			
-	var scaling_factor = 512 / 2 * global_scale.x
+	var scaling_factor = 512 / 2
 	var within_x_bounds = global_position.x - scaling_factor < position.x and position.x < global_position.x + scaling_factor
 	var within_y_bounds = global_position.y - scaling_factor < position.y and position.y < global_position.y + scaling_factor
 	return within_x_bounds and within_y_bounds
