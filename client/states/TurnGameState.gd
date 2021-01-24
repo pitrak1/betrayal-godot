@@ -12,6 +12,7 @@ func enter(custom_data):
 	add_child(_grid)
 	_grid.set_current_state(self)
 	add_child(_room_stack)
+	$Camera2D.make_current()
 	
 func select_handler(node):
 	__selected = node

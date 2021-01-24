@@ -12,7 +12,6 @@ func setup(room_stack):
 	__constants = __constants_script.new()
 	__initialize_rooms()
 	__place_starting_rooms(room_stack)
-	__setup_camera()
 	
 func __initialize_rooms():
 	__rooms = []
@@ -29,17 +28,6 @@ func __place_starting_rooms(room_stack):
 	for starting_room in __constants.starting_rooms:
 		var room = room_stack.get_by_key(starting_room["key"])
 		place_room(room, starting_room["position"], starting_room["rotation"])
-		
-func __setup_camera():
-	$Camera.connect("zoom", self, "on_Camera_zoom")
-	$Camera.connect("pan", self, "on_Camera_pan")
-	
-func on_Camera_zoom(factor):
-	var new_scale = clamp(scale.x + factor, 0.2, 2)
-	scale = Vector2(new_scale, new_scale)
-	
-func on_Camera_pan(factor):
-	position += factor * scale.x
 	
 func set_current_state(state):
 	__current_state = state

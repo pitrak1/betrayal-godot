@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://client/states/TurnGameState.gd" type="Script" id=1]
 [ext_resource path="res://client/states/common/GameBackground.tscn" type="PackedScene" id=2]
 [ext_resource path="res://common/RoomStack.tscn" type="PackedScene" id=3]
+[ext_resource path="res://common/Camera2D.gd" type="Script" id=4]
 
 [node name="TurnGameState" type="Control"]
 anchor_right = 1.0
@@ -12,10 +13,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GameBackground" parent="." instance=ExtResource( 2 )]
+[node name="BackgroundCanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="GameBackground" parent="BackgroundCanvasLayer" instance=ExtResource( 2 )]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 0.0
 margin_bottom = 0.0
 
 [node name="RoomStack" parent="." instance=ExtResource( 3 )]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource( 4 )
