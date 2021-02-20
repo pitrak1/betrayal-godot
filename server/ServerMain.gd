@@ -11,9 +11,6 @@ var __constants
 
 func _ready():
 	__constants = __constants_script.new()
-	var peer = NetworkedMultiplayerENet.new()
-	peer.create_server(8910, 6)
-	get_tree().network_peer = peer
 	
 func handle_incoming_network_command(command_type, sender_id, data):
 	if sender_id in __players.keys() and __players[sender_id].get_game():

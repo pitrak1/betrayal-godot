@@ -15,6 +15,7 @@ texture = ExtResource( 4 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+visible = false
 margin_left = 399.596
 margin_top = 127.961
 margin_right = 549.596

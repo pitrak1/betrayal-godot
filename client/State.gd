@@ -1,47 +1,30 @@
-extends CanvasItem
+extends Node2D
 
-signal log_string(string)
-# warning-ignore:unused_signal
-signal change_state(state_name, custom_data)
-# warning-ignore:unused_signal
-signal send_network_command(command_name, data)
-
-const __constants_script = preload("res://Constants.gd")
-
-var _custom_data
-var _host
-var _player_name
-var _game_name
+var _global_context
+var _state_machine
+var _network
 var _constants
-var _grid
-var _players
-var _room_stack
 
-func enter(custom_data):
-	emit_signal("log_string", "Entering " + self.name + "...")
-	_custom_data = custom_data
-	if "host" in custom_data.keys():
-		_host = custom_data["host"]
-	if "player_name" in custom_data.keys():
-		_player_name = custom_data["player_name"]
-	if "game_name" in custom_data.keys():
-		_game_name = custom_data["game_name"]
-	if "grid" in custom_data.keys():
-		_grid = custom_data["grid"]
-	if "players" in custom_data.keys():
-		_players = custom_data["players"]
-	if "room_stack" in custom_data.keys():
-		_room_stack = custom_data["room_stack"]
-	_constants = __constants_script.new()
+func _ready():
+	_global_context = get_node("/root/GlobalContext")
+	_state_machine = get_node("/root/StateMachine")
+	_network = get_node("/root/Network")
+	_constants = get_node("/root/Constants")
 
-func exit():
-	pass
-
-func handle_input(_event):
-	pass
-
-func physics_process(_delta):
-	pass
-
-func _on_animation_finished(_anim_name):
-	pass
+	self._log("Entered state " + self.name)
+	$UICanvasLayer/LoadingLabel.visible = false
+	$Camera2D.make_current()
+	
+func _log(string):
+	_global_context.log_contents += string + "\n"
+	$UICanvasLayer/Log.text = _global_context.log_contents
+	
+func send_network_command(command_type, data):
+	_log("Sending " + command_type + " command...")
+	_network.client_handle_outgoing_network_command(command_type, data)
+	$UICanvasLayer/LoadingLabel.visible = true
+	
+func on_receive_network_response(command_type, data):
+	_log("Handling " + command_type + " response...")
+	self.call(command_type + "_response", data)
+	$UICanvasLayer/LoadingLabel.visible = false
