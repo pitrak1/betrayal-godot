@@ -1,28 +1,25 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://client/states/TurnGameState.gd" type="Script" id=1]
 [ext_resource path="res://client/states/common/GameBackground.tscn" type="PackedScene" id=2]
-[ext_resource path="res://common/RoomStack.tscn" type="PackedScene" id=3]
+[ext_resource path="res://common/LoadingLabel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://common/Camera2D.gd" type="Script" id=4]
+[ext_resource path="res://common/Log.tscn" type="PackedScene" id=5]
 
-[node name="TurnGameState" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="TurnGameState" type="Node2D"]
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="BackgroundCanvasLayer" type="CanvasLayer" parent="."]
-layer = -1
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource( 4 )
 
-[node name="GameBackground" parent="BackgroundCanvasLayer" instance=ExtResource( 2 )]
+[node name="UICanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GameBackground" parent="UICanvasLayer" instance=ExtResource( 2 )]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 0.0
 margin_bottom = 0.0
 
-[node name="RoomStack" parent="." instance=ExtResource( 3 )]
+[node name="Log" parent="UICanvasLayer" instance=ExtResource( 5 )]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-script = ExtResource( 4 )
+[node name="LoadingLabel" parent="UICanvasLayer" instance=ExtResource( 3 )]

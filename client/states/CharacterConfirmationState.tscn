@@ -1,73 +1,78 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://client/states/CharacterConfirmationState.gd" type="Script" id=1]
 [ext_resource path="res://client/states/common/GameBackground.tscn" type="PackedScene" id=2]
+[ext_resource path="res://client/states/Camera2D.tscn" type="PackedScene" id=3]
+[ext_resource path="res://common/Log.tscn" type="PackedScene" id=4]
+[ext_resource path="res://common/LoadingLabel.tscn" type="PackedScene" id=5]
 
-[node name="CharacterConfirmationState" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="CharacterConfirmationState" type="Node2D"]
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="GameBackground" parent="." instance=ExtResource( 2 )]
+[node name="Camera2D" parent="." instance=ExtResource( 3 )]
+
+[node name="UICanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GameBackground" parent="UICanvasLayer" instance=ExtResource( 2 )]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 0.0
 margin_bottom = 0.0
 
-[node name="InfoLabel" type="Label" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -200.0
-margin_top = -260.0
-margin_bottom = -230.0
-rect_scale = Vector2( 2, 2 )
-text = "The character's selected are:"
-align = 1
-
-[node name="CharacterSelectionLabel" type="Label" parent="."]
+[node name="InfoLabel" type="Label" parent="UICanvasLayer"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -200.0
 margin_top = -210.0
-margin_right = 6.10352e-05
-margin_bottom = -60.0
+margin_bottom = -180.0
+rect_scale = Vector2( 2, 2 )
+text = "The character's selected are:"
+align = 1
+
+[node name="CharacterSelectionLabel" type="Label" parent="UICanvasLayer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -200.0
+margin_top = -140.0
+margin_right = 0.00012207
+margin_bottom = 10.0
 rect_scale = Vector2( 2, 2 )
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ContinueButton" type="Button" parent="."]
+[node name="ContinueButton" type="Button" parent="UICanvasLayer"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -150.0
-margin_top = 140.0
-margin_bottom = 175.0
+margin_top = 190.0
+margin_bottom = 225.0
 rect_scale = Vector2( 2, 2 )
 text = "Continue"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="WaitingLabel" type="Label" parent="."]
-visible = false
+[node name="WaitingLabel" type="Label" parent="UICanvasLayer"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -400.0
-margin_top = 230.0
+margin_top = 280.0
 margin_right = 6.10352e-05
-margin_bottom = 260.0
+margin_bottom = 310.0
 rect_scale = Vector2( 2, 2 )
 text = "Waiting for other players..."
 align = 1
+
+[node name="Log" parent="UICanvasLayer" instance=ExtResource( 4 )]
+
+[node name="LoadingLabel" parent="UICanvasLayer" instance=ExtResource( 5 )]

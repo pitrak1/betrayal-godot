@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://client/states/CharacterSelectionState.gd" type="Script" id=1]
 [ext_resource path="res://client/states/common/GameBackground.tscn" type="PackedScene" id=2]
@@ -6,22 +6,24 @@
 [ext_resource path="res://client/states/common/ActorInfo.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/right_arrow.png" type="Texture" id=5]
 [ext_resource path="res://client/states/common/TurnIndicator.tscn" type="PackedScene" id=6]
+[ext_resource path="res://client/states/Camera2D.tscn" type="PackedScene" id=7]
+[ext_resource path="res://common/Log.tscn" type="PackedScene" id=8]
+[ext_resource path="res://common/LoadingLabel.tscn" type="PackedScene" id=9]
 
-[node name="CharacterSelectionState" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="CharacterSelectionState" type="Node2D"]
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="GameBackground" parent="." instance=ExtResource( 2 )]
+[node name="Camera2D" parent="." instance=ExtResource( 7 )]
+
+[node name="UICanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GameBackground" parent="UICanvasLayer" instance=ExtResource( 2 )]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 0.0
 margin_bottom = 0.0
 
-[node name="CharacterInfoPanel" type="NinePatchRect" parent="."]
+[node name="CharacterInfoPanel" type="NinePatchRect" parent="UICanvasLayer"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -39,40 +41,40 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ActorInfo" parent="." instance=ExtResource( 4 )]
+[node name="ActorInfo" parent="UICanvasLayer/CharacterInfoPanel" instance=ExtResource( 4 )]
 anchor_left = 0.5
 anchor_top = 0.501
 anchor_right = 0.5
 anchor_bottom = 0.501
-margin_left = 120.0
-margin_top = -340.72
-margin_right = 320.0
-margin_bottom = 340.28
+margin_left = -100.0
+margin_top = -341.901
+margin_right = 100.0
+margin_bottom = 339.099
 
-[node name="RightButton" type="Button" parent="."]
+[node name="RightButton" type="Button" parent="UICanvasLayer"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = 350.0
-margin_top = -110.0
+margin_top = -60.0
 margin_right = 602.0
-margin_bottom = 290.0
+margin_bottom = 340.0
 rect_scale = Vector2( 0.5, 0.5 )
 icon = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LeftButton" type="Button" parent="."]
+[node name="LeftButton" type="Button" parent="UICanvasLayer"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = 90.0001
-margin_top = 90.0
+margin_top = 140.0
 margin_right = 342.0
-margin_bottom = 490.0
+margin_bottom = 540.0
 rect_rotation = 180.0
 rect_scale = Vector2( 0.5, 0.5 )
 icon = ExtResource( 5 )
@@ -80,19 +82,27 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SelectButton" type="Button" parent="."]
+[node name="SelectButton" type="Button" parent="UICanvasLayer"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -490.0
-margin_top = 40.0
-margin_right = -340.0
-margin_bottom = 90.0
+margin_left = -460.0
+margin_top = -60.0
+margin_right = -310.0
+margin_bottom = -10.0
 rect_scale = Vector2( 2, 2 )
 text = "Select"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TurnIndicator" parent="." instance=ExtResource( 6 )]
+[node name="TurnIndicator" parent="UICanvasLayer" instance=ExtResource( 6 )]
+margin_left = -540.0
+margin_top = -260.0
+margin_right = -290.0
+margin_bottom = -230.0
+
+[node name="Log" parent="UICanvasLayer" instance=ExtResource( 8 )]
+
+[node name="LoadingLabel" parent="UICanvasLayer" instance=ExtResource( 9 )]
