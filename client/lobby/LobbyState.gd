@@ -8,7 +8,6 @@ func _ready():
 	send_network_command("get_players", {})
 	
 func get_players_response(data):
-	_log("Handling get_players_response with status " + data["status"] + "...")
 	for i in range(6):
 		var lobby_player = get_node("UICanvasLayer/MenuPanel/LobbyPlayer" + str(i + 1))
 		if i < data["players"].size():
@@ -19,12 +18,10 @@ func get_players_response(data):
 			lobby_player.set_host_indicator(false)
 	
 func on_StartButton_pressed():
-	_log("Handling StartButton pressed...")
 	send_network_command("start_game", {})
 	
 func start_game_response(data):
-	_log("Handling start_game_response with status " + data["status"] + "...")
-	_state_machine.goto_scene("res://client/states/PlayerOrderState.tscn")
+	_state_machine.set_state("res://client/player_order/PlayerOrderState.tscn")
 	
 func on_BackButton_pressed():
-	_state_machine.goto_scene("res://client/states/MainMenuState.tscn")
+	_state_machine.set_state("res://client/main_menu/MainMenuState.tscn")

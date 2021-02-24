@@ -17,13 +17,10 @@ func get_players_response(response):
 			+ player["character_entry"]["display_name"] + "\n"
 		
 func on_ContinueButton_pressed():
-	_log("Handling on_ContinueButton_pressed...")
-	$WaitingLabel.visible = true
+	$UICanvasLayer/WaitingLabel.visible = true
 	send_network_command("confirm_sync", {})
 	
 func confirm_sync_response(_response):
-	_log("Handling confirm_sync_response...")
-	
 	var room_stack = __room_stack.instance()
 	room_stack.setup()
 	
@@ -35,7 +32,7 @@ func confirm_sync_response(_response):
 	_global_context.player_info["grid"] = grid
 	_global_context.player_info["players"] = player_nodes
 	_global_context.player_info["room_stack"] = room_stack
-	_state_machine.goto_scene("res://client/states/TurnGameState.tscn")
+	_state_machine.set_scene("res://client/states/TurnGameState.tscn")
 	
 func __setup_players(grid):
 	var player_nodes = []

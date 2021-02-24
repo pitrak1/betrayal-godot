@@ -27,7 +27,7 @@ func on_SelectButton_pressed():
 	
 func select_character_response(response):
 	if response["all_selected"]:
-		_state_machine.goto_scene("res://client/states/CharacterConfirmationState.tscn")
+		_state_machine.set_state("res://client/character_confirmation/CharacterConfirmationState.tscn")
 	else:
 		for index in response["unavailable_characters"]:
 			__characters[index]["status"] = "UNAVAILABLE"

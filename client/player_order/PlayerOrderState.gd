@@ -10,9 +10,8 @@ func get_players_response(response):
 	$UICanvasLayer/PlayerOrderLabel.text = $UICanvasLayer/PlayerOrderLabel.text.substr(0, $UICanvasLayer/PlayerOrderLabel.text.length() - 2)
 	
 func on_ContinueButton_pressed():
-	_log("Handling ContinueButton pressed...")
 	$UICanvasLayer/WaitingLabel.visible = true
 	send_network_command("confirm_sync", {})
 	
 func confirm_sync_response(_response):
-	_state_machine.goto_scene("res://client/states/CharacterSelectionState.tscn")
+	_state_machine.set_state("res://client/character_selection/CharacterSelectionState.tscn")

@@ -1,19 +1,23 @@
 extends Node2D
 
-func _ready():
-	var global_context = get_node("/root/GlobalContext")
-	var state_machine = get_node("/root/StateMachine")
-	if OS.has_feature("server"):
-		__start_server(state_machine)
-	elif OS.has_feature("client"):
-		__start_client(state_machine)
-	elif global_context.player_info["network_role"] == "server":
-		__start_server(state_machine)
-	else:
-		__start_client(state_machine)
-		
-func __start_client(state_machine):
-	state_machine.goto_scene("res://client/states/SplashState.tscn")
+var __global_context
+var __state_machine
 
-func __start_server(state_machine):
-	state_machine.goto_scene("res://server/ServerMain.tscn")
+func _ready():
+	__global_context = get_node("/root/GlobalContext")
+	__state_machine = get_node("/root/StateMachine")
+	
+	if OS.has_feature("server"):
+		__start_server()
+	elif OS.has_feature("client"):
+		__start_client()
+	elif __global_context.player_info["network_role"] == "server":
+		__start_server()
+	else:
+		__start_client()
+		
+func __start_client():
+	__state_machine.set_state("res://client/splash/SplashState.tscn")
+
+func __start_server():
+	__state_machine.set_state("res://server/ServerMain.tscn")

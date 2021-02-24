@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://client/states/CharacterConfirmationState.gd" type="Script" id=1]
-[ext_resource path="res://client/states/common/GameBackground.tscn" type="PackedScene" id=2]
-[ext_resource path="res://client/states/Camera2D.tscn" type="PackedScene" id=3]
+[ext_resource path="res://client/character_confirmation/CharacterConfirmationState.gd" type="Script" id=1]
+[ext_resource path="res://client/common/GameBackground.tscn" type="PackedScene" id=2]
+[ext_resource path="res://client/common/Camera2D.tscn" type="PackedScene" id=3]
 [ext_resource path="res://common/Log.tscn" type="PackedScene" id=4]
 [ext_resource path="res://common/LoadingLabel.tscn" type="PackedScene" id=5]
 

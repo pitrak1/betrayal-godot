@@ -1,9 +1,11 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://client/states/DebugState.gd" type="Script" id=1]
-[ext_resource path="res://client/states/Camera2D.gd" type="Script" id=3]
+[ext_resource path="res://client/DebugState.gd" type="Script" id=1]
+[ext_resource path="res://client/common/Camera2D.gd" type="Script" id=3]
 [ext_resource path="res://assets/zoe_ingstrom.png" type="Texture" id=4]
 [ext_resource path="res://assets/ox_bellows.png" type="Texture" id=6]
+
+
 
 [node name="DebugState" type="Node2D"]
 script = ExtResource( 1 )

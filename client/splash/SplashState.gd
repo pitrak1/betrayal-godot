@@ -4,5 +4,4 @@ func _ready():
 	$UICanvasLayer/MenuPanel/StartButton.connect("pressed", self, "on_StartButton_pressed")
 
 func on_StartButton_pressed():
-	_log("Handling StartButton pressed...")
-	_state_machine.goto_scene("res://client/states/MainMenuState.tscn")
+	_state_machine.set_state("res://client/main_menu/MainMenuState.tscn")

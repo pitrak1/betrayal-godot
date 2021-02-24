@@ -2,27 +2,34 @@ extends "res://client/State.gd"
 
 var __player_name
 var __game_name
+const __text_validator_script = preload("res://common/Textvalidator.gd")
+var __text_validator
 
 func _ready():
+	__text_validator = __text_validator_script.new()
+	
+	$UICanvasLayer/MenuPanel/PlayerNameTextInput.set_label("Player Name")
+	$UICanvasLayer/MenuPanel/GameNameTextInput.set_label("Game Name")
 	if _global_context.player_info["host"]:
 		$UICanvasLayer/MenuPanel.set_title("Host Game")
 		$UICanvasLayer/MenuPanel/StartButton.text = "Create"
 	else:
 		$UICanvasLayer/MenuPanel.set_title("Join Game")
 		$UICanvasLayer/MenuPanel/StartButton.text = "Join"
-	$UICanvasLayer/MenuPanel/PlayerNameTextInput.setup("Player Name", 5, 15)
-	$UICanvasLayer/MenuPanel/GameNameTextInput.setup("Game Name", 5, 15)
+	
 	$UICanvasLayer/MenuPanel/StartButton.connect("pressed", self, "on_StartButton_pressed")
 	$UICanvasLayer/MenuPanel/BackButton.connect("pressed", self, "on_BackButton_pressed")
 
 func on_StartButton_pressed():
-	_log("Handling StartButton pressed...")
 	__player_name = $UICanvasLayer/MenuPanel/PlayerNameTextInput.get_input_text()
-	__game_name = $UICanvasLayer/MenuPanel/GameNameTextInput.get_input_text() 
-	var player_name_validation = $UICanvasLayer/MenuPanel/PlayerNameTextInput.validate()
-	var game_name_validation = $UICanvasLayer/MenuPanel/GameNameTextInput.validate()
+	__game_name = $UICanvasLayer/MenuPanel/GameNameTextInput.get_input_text()
+	var player_name_validation = __text_validator.player_name_validator(__player_name)
+	var game_name_validation = __text_validator.game_name_validator(__player_name, _global_context.player_info["host"])
+	
+	$UICanvasLayer/MenuPanel/PlayerNameTextInput.set_validation_label(player_name_validation)
+	$UICanvasLayer/MenuPanel/PlayerNameTextInput.set_validation_label(player_name_validation)
 
-	if player_name_validation and game_name_validation:
+	if not player_name_validation and not game_name_validation:
 		if _global_context.player_info["host"]:
 			send_network_command("register_player_and_create_game", {
 				"player_name": __player_name, 
@@ -33,28 +40,22 @@ func on_StartButton_pressed():
 				"player_name": __player_name, 
 				"game_name": __game_name
 			})
-		
+
 func register_player_and_create_game_response(data):
-	_log("Handling register_player_and_create_game_response with status " + data["status"] + "...")
 	__response(data)
 	
 func register_player_and_join_game_response(data):
-	_log("Handling register_player_and_join_game_response with status " + data["status"] + "...")
 	__response(data)
 	
 func __response(data):
-	if data["status"] == "invalid_player_name":
-		$UICanvasLayer/MenuPanel/PlayerNameTextInput.set_validation_label("Name is already in use")
-	elif data["status"] == "invalid_game_name":
-		if _global_context.player_info["host"]:
-			$UICanvasLayer/MenuPanel/GameNameTextInput.set_validation_label("Name is already in use")
-		else:
-			$UICanvasLayer/MenuPanel/GameNameTextInput.set_validation_label("Game does not exist")
+	if data["status"] == "player_name_taken":
+		$UICanvasLayer/MenuPanel/PlayerNameTextInput.set_validation_label(data["status"])
+	elif data["status"] == "game_name_taken" or data["status"] == "game_not_found":
+		$UICanvasLayer/MenuPanel/GameNameTextInput.set_validation_label(data['status'])
 	elif data["status"] == "success":
 		_global_context.player_info["player_name"] = __player_name
 		_global_context.player_info["game_name"] = __game_name
-		_state_machine.goto_scene("res://client/states/LobbyState.tscn")
+		_state_machine.set_state("res://client/lobby/LobbyState.tscn")
 	
 func on_BackButton_pressed():
-	_log("Handling BackButton pressed...")
-	_state_machine.goto_scene("res://client/states/MainMenuState.tscn")
+	_state_machine.set_state("res://client/main_menu/MainMenuState.tscn")

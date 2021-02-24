@@ -25,6 +25,6 @@ func send_network_command(command_type, data):
 	$UICanvasLayer/LoadingLabel.visible = true
 	
 func on_receive_network_response(command_type, data):
-	_log("Handling " + command_type + " response...")
+	_log("Handling " + command_type + " response with status " + data['status'] + "...")
 	self.call(command_type + "_response", data)
 	$UICanvasLayer/LoadingLabel.visible = false
