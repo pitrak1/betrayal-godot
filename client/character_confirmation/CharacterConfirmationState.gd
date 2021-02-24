@@ -1,9 +1,7 @@
 extends "res://client/State.gd"
 
-const __room_stack = preload("res://common/RoomStack.tscn")
-const __grid_scene = preload("res://common/Grid.tscn")
-const __player_scene = preload("res://common/Player.tscn")
-const __actor_scene = preload("res://common/Actor.tscn")
+const __setup_game_script = preload("res://common/SetupGame.gd")
+onready var __setup_game = __setup_game_script.new()
 var __players
 
 func _ready():
@@ -21,28 +19,4 @@ func on_ContinueButton_pressed():
 	send_network_command("confirm_sync", {})
 	
 func confirm_sync_response(_response):
-	var room_stack = __room_stack.instance()
-	room_stack.setup()
-	
-	var grid = __grid_scene.instance()
-	grid.setup(room_stack)
-	
-	var player_nodes = __setup_players(grid)
-	
-	_global_context.player_info["grid"] = grid
-	_global_context.player_info["players"] = player_nodes
-	_global_context.player_info["room_stack"] = room_stack
-	_state_machine.set_scene("res://client/states/TurnGameState.tscn")
-	
-func __setup_players(grid):
-	var player_nodes = []
-	for player_info in __players:
-		var player = __player_scene.instance()
-		player.setup(
-			player_info["name"],
-			player_info["host"],
-			player_info["character_entry"],
-			player_info["name"] == _global_context.player_info["player_name"]
-		)
-		grid.place_actor(player.get_primary_actor(), Vector2(3, 5))
-	return player_nodes
+	_state_machine.set_state("res://client/game_turn/GameTurnState.tscn")
