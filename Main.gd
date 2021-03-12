@@ -17,7 +17,7 @@ func _ready():
 		__start_client()
 		
 func __start_client():
-	__state_machine.set_state("res://client/splash/SplashState.tscn")
+	__state_machine.set_state("res://client/DebugState.tscn")
 
 func __start_server():
 	__state_machine.set_state("res://server/ServerMain.tscn")

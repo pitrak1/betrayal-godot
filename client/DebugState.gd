@@ -28,12 +28,12 @@ func _input(event):
 		
 		# Because our CanvasLayer is at 0,0 and overlaps our camera entirely, both positions start from the top left of the viewport
 		# The 75, 75 is just because a textureRect's position is measured from the upper left apparently
-		if __within_bounds(event.global_position, $CanvasLayer/TextureRect.rect_position + Vector2(75, 75), 150, 150):
+		if __within_bounds(event.global_position, $UICanvasLayer/TextureRect.rect_position + Vector2(75, 75), 150, 150):
 			if __current_texture == 1:
-				$CanvasLayer/TextureRect.texture = __texture2
+				$UICanvasLayer/TextureRect.texture = __texture2
 				__current_texture = 2
 			else:
-				$CanvasLayer/TextureRect.texture = __texture1
+				$UICanvasLayer/TextureRect.texture = __texture1
 				__current_texture = 1
 		
 func __within_bounds(point, center, width, height):
