@@ -4,6 +4,7 @@ var __global_context
 var __state_machine
 
 func _ready():
+	randomize()
 	__global_context = get_node("/root/GlobalContext")
 	__state_machine = get_node("/root/StateMachine")
 	

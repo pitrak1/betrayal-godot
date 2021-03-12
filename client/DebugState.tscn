@@ -29,6 +29,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="GoToGameButton" type="Button" parent="UICanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1120.0
+margin_top = 660.0
+margin_right = -10.0
+margin_bottom = -9.99994
+text = "Go To Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Log" parent="UICanvasLayer" instance=ExtResource( 5 )]
 
 [node name="LoadingLabel" parent="UICanvasLayer" instance=ExtResource( 2 )]

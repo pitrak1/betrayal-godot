@@ -8,10 +8,8 @@ var __texture1 = load("res://assets/ox_bellows.png")
 var __texture2 = load("res://assets/darrin_williams.png")
 var __current_texture = 1
 
-func enter(custom_data):
-	.enter(custom_data)
-	# Camera must be made current for it to work
-	$Camera2D.make_current()
+func _ready():
+	$UICanvasLayer/GoToGameButton.connect("pressed", self, "on_GoToGameButton_pressed")
 	
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed():
@@ -35,6 +33,21 @@ func _input(event):
 			else:
 				$UICanvasLayer/TextureRect.texture = __texture1
 				__current_texture = 1
+			
+func on_GoToGameButton_pressed():
+	_global_context.player_info["host"] = true
+	_global_context.player_info["player_name"] = "player " + str(randi() % 500)
+	_global_context.player_info["game_name"] = "lobby " + str(randi() % 500)
+	send_network_command("register_player_and_create_game", {
+		"player_name": _global_context.player_info["player_name"], 
+		"game_name": _global_context.player_info["game_name"]
+	})
+	
+func register_player_and_create_game_response(_data):
+	send_network_command("select_character", { "character_index": randi() % _constants.characters.size() })
+	
+func select_character_response(_response):
+	_state_machine.set_state("res://client/game_turn/GameTurnState.tscn")
 		
 func __within_bounds(point, center, width, height):
 	var in_x = center.x - width/2 < point.x and point.x < center.x + width/2
