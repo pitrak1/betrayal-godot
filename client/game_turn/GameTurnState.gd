@@ -10,6 +10,10 @@ var __selected
 func _ready():
 	print(_global_context)
 	print(_global_context.player_info)
+	$Camera2D.center_on_grid_position(Vector2(3, 3))
+	add_child(_global_context.grid_info['room_stack'])
+	add_child(_global_context.grid_info['grid'])
+	print(get_node("Grid").get_child_count())
 #	__setup_game.setup(__players)
 #	var grid = _global_context.player_info["grid"]
 #	add_child(grid)

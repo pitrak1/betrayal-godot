@@ -9,7 +9,7 @@ func _ready():
 	self.position = Vector2(
 		__constants.starting_grid_position.x, 
 		__constants.starting_grid_position.y
-	) * __constants.tile_size + Vector2(640 + 256, 360)
+	) * __constants.tile_size + Vector2(640, 360)
 	
 func _process(_delta):
 	var factor = Vector2()
@@ -29,3 +29,6 @@ func _process(_delta):
 		self.zoom -= Vector2(0.2, 0.2)
 	if Input.is_action_just_pressed("ui_zoom_in"):
 		self.zoom += Vector2(0.2, 0.2)
+		
+func center_on_grid_position(grid_position):
+	self.position = grid_position * __constants.tile_size + Vector2(640, 360)
