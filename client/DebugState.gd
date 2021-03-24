@@ -1,7 +1,6 @@
 extends "res://client/State.gd"
 
-var __grid_scene = load("res://common/Grid.tscn")
-var __room_stack_scene = load("res://common/RoomStack.tscn")
+var __setup_game_script = load("res://common/setupGame.gd")
 
 var __sprite1 = load("res://assets/zoe_ingstrom.png")
 var __sprite2 = load("res://assets/missy_dubourde.png")
@@ -50,14 +49,12 @@ func register_player_and_create_game_response(_data):
 	send_network_command("select_character", { "character_index": randi() % _constants.characters.size() })
 	
 func select_character_response(_response):
-	var room_stack = __room_stack_scene.instance()
-	room_stack.setup()
-	_global_context.grid_info["room_stack"] = room_stack
+	send_network_command("get_players", { "response_type": "return" })
 	
-	var grid = __grid_scene.instance()
-	grid.setup(room_stack)
-	_global_context.grid_info["grid"] = grid
-	
+func get_players_response(response):
+	var setup = __setup_game_script.new()
+	setup.setup(_global_context, response["players"])
+
 	_state_machine.set_state("res://client/game_turn/GameTurnState.tscn")
 		
 func __within_bounds(point, center, width, height):

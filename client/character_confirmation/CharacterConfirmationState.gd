@@ -19,4 +19,7 @@ func on_ContinueButton_pressed():
 	send_network_command("confirm_sync", {})
 	
 func confirm_sync_response(_response):
+	var setup = __setup_game_script.new()
+	setup.setup(_global_context, __players)
+	
 	_state_machine.set_state("res://client/game_turn/GameTurnState.tscn")

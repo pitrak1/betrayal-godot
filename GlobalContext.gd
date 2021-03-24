@@ -10,5 +10,6 @@ export var player_info = {
 export var testing = false
 export var log_contents = ""
 export var grid_info = {
-	"grid": null
+	"grid": null,
+	"room_stack": null
 }
