@@ -11,19 +11,19 @@ var grid_position
 func _ready():
 	_constants = __constants_script.new()
 	
-func setup(entry=null):
+func setup(_entry=null):
 	_constants = __constants_script.new()
 	
-func has_door(direction):
+func has_door(_direction):
 	return true
 	
-func has_link(room):
+func has_link(_room):
 	return true
 	
-func add_link(room):
+func add_link(_room):
 	pass
 	
-func remove_link(room):
+func remove_link(_room):
 	pass
 
 func _input(event):
@@ -43,9 +43,9 @@ func is_in_bounds(position):
 	var within_y_bounds = global_position.y - scaling_factor < position.y and position.y < global_position.y + scaling_factor
 	return within_x_bounds and within_y_bounds
 	
-func set_position_and_rotation(grid_position, rotation=0):
-	self.grid_position = grid_position
-	self.position = Vector2(grid_position.x * _constants.tile_size, grid_position.y * _constants.tile_size)
+func set_position_and_rotation(grid_pos, _rotation=0):
+	self.grid_position = grid_pos
+	self.position = Vector2(grid_pos.x * _constants.tile_size, grid_pos.y * _constants.tile_size)
 
 func clear_position_and_rotation():
 	grid_position = null

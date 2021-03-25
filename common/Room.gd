@@ -59,9 +59,9 @@ func remove_actor(actor):
 func has_actor(actor):
 	return actor in __actors
 	
-func get_actor_by_key(key):
+func get_actor_by_key(k):
 	for actor in __actors:
-		if actor.key == key:
+		if actor.key == k:
 			return actor
 	return null
 	

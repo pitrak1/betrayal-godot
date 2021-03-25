@@ -1,7 +1,7 @@
 extends Node2D
 
 signal select(node)
-signal activate(node)
+#signal activate(node)
 
 const __constants_script = preload("res://Constants.gd")
 
