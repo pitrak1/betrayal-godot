@@ -10,6 +10,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+_file_prefix = "Test"
 _include_subdirectories = true
-_directory1 = "res://test/integration"
+_directory1 = "res://test/unit"
 _directory2 = "res://test/unit"
