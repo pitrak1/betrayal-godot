@@ -1,7 +1,7 @@
 extends Node2D
 
 signal select(node)
-#signal activate(node)
+signal activate(node)
 
 const __constants_script = preload("res://Constants.gd")
 
@@ -44,5 +44,9 @@ func select_handler(node):
 		$SelectedSprite.hide()
 
 func is_in_bounds(position):
+	var camera_position = get_tree().get_current_scene().get_node("Camera2D").position
+	var viewport_size = get_viewport_rect().size
+	var adjusted_position = camera_position - viewport_size / 2 + position
+	
 	var scaling_factor = _constants.actor_size / 2
-	return global_position.distance_to(position) < scaling_factor
+	return global_position.distance_to(adjusted_position) < scaling_factor

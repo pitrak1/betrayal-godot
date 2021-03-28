@@ -11,6 +11,7 @@ var __texture2 = load("res://assets/darrin_williams.png")
 var __current_texture = 1
 
 func _ready():
+	$Camera2D.center_on_grid_position(Vector2(0, 0))
 	$UICanvasLayer/GoToGameButton.connect("pressed", self, "on_GoToGameButton_pressed")
 	
 func _input(event):

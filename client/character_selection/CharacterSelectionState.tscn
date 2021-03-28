@@ -1,14 +1,17 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://client/character_selection/CharacterSelectionState.gd" type="Script" id=1]
-[ext_resource path="res://client/common/GameBackground.tscn" type="PackedScene" id=2]
+[ext_resource path="res://common/GameBackground.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/grey_panel.png" type="Texture" id=3]
-[ext_resource path="res://client/character_selection/ActorInfo.tscn" type="PackedScene" id=4]
+[ext_resource path="res://common/ActorInfo.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/right_arrow.png" type="Texture" id=5]
-[ext_resource path="res://client/character_selection/TurnIndicator.tscn" type="PackedScene" id=6]
-[ext_resource path="res://client/common/Camera2D.tscn" type="PackedScene" id=7]
+[ext_resource path="res://common/TurnIndicator.tscn" type="PackedScene" id=6]
+[ext_resource path="res://common/Camera2D.tscn" type="PackedScene" id=7]
 [ext_resource path="res://common/Log.tscn" type="PackedScene" id=8]
 [ext_resource path="res://common/LoadingLabel.tscn" type="PackedScene" id=9]
+
+
+
 
 
 

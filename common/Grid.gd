@@ -6,7 +6,7 @@ const __constants_script = preload("res://Constants.gd")
 var __rooms
 var __selected
 var __constants
-var __current_state
+var __global_context
 	
 func setup(room_stack):
 	__constants = __constants_script.new()
@@ -28,15 +28,16 @@ func __place_starting_rooms(room_stack):
 	for starting_room in __constants.starting_rooms:
 		var room = room_stack.get_by_key(starting_room["key"])
 		place_room(room, starting_room["position"], starting_room["rotation"])
-	
-func set_current_state(state):
-	__current_state = state
-	
+#
 func select_handler(node):
-	__current_state.select_handler(node)
-	
+	if not __global_context:
+		__global_context = get_node("/root/GlobalContext")
+	__global_context.game_info["current_state"].select_handler(node)
+
 func activate_handler(node):
-	__current_state.activate_handler(node)
+	if not __global_context:
+		__global_context = get_node("/root/GlobalContext")
+	__global_context.game_info["current_state"].activate_handler(node)
 		
 func place_room(room, grid_position, rotation=0):
 	if __rooms[grid_position.x][grid_position.y]:

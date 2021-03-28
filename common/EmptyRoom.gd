@@ -27,8 +27,9 @@ func remove_link(_room):
 	pass
 
 func _input(event):
-	if event is InputEventMouseButton and is_in_bounds(event.global_position):
+	if event is InputEventMouseButton and is_in_bounds(event.position):
 		if event.button_index == BUTTON_LEFT and event.is_pressed():
+			print('test')
 			emit_signal("select", self)
 		elif event.button_index == BUTTON_RIGHT and event.is_pressed():
 			emit_signal("activate", self)
@@ -37,10 +38,14 @@ func is_in_bounds(position):
 	for actor in __actors:
 		if actor.is_in_bounds(position):
 			return false
-			
-	var scaling_factor = 512 / 2
-	var within_x_bounds = global_position.x - scaling_factor < position.x and position.x < global_position.x + scaling_factor
-	var within_y_bounds = global_position.y - scaling_factor < position.y and position.y < global_position.y + scaling_factor
+
+	var camera_position = get_tree().get_current_scene().get_node("Camera2D").position
+	var viewport_size = get_viewport_rect().size
+	var adjusted_position = camera_position - viewport_size / 2 + position
+
+	var room_size = 512 / 2
+	var within_x_bounds = global_position.x - room_size < adjusted_position.x and adjusted_position.x < global_position.x + room_size
+	var within_y_bounds = global_position.y - room_size < adjusted_position.y and adjusted_position.y < global_position.y + room_size
 	return within_x_bounds and within_y_bounds
 	
 func set_position_and_rotation(grid_pos, _rotation=0):
