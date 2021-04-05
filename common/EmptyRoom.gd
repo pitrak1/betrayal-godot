@@ -29,7 +29,6 @@ func remove_link(_room):
 func _input(event):
 	if event is InputEventMouseButton and is_in_bounds(event.position):
 		if event.button_index == BUTTON_LEFT and event.is_pressed():
-			print('test')
 			emit_signal("select", self)
 		elif event.button_index == BUTTON_RIGHT and event.is_pressed():
 			emit_signal("activate", self)
