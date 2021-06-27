@@ -327,7 +327,8 @@ export var characters = [
 	}
 ]
 
-export var ip_address = "localhost"
+#export var ip_address = "localhost"
+export var ip_address = "ec2-54-186-188-11.us-west-2.compute.amazonaws.com"
 export var port = 8910
 
 export var starting_grid_position = Vector2(3, 5)
