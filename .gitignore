@@ -10,3 +10,6 @@ lib/
 export_presets.cfg
 .mono/
 **/.DS_Store
+
+# Addons
+/addons/StateMachine/
