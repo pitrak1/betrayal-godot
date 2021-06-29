@@ -23,8 +23,8 @@ config/icon="res://icon.png"
 
 Constants="*res://Constants.gd"
 GlobalContext="*res://GlobalContext.gd"
-StateMachine="*res://addons/StateMachine/Main.gd"
-Network="*res://Network.gd"
+StateMachine="*res://addons/ProjectBootstrap/StateMachine.gd"
+Network="*res://addons/ProjectBootstrap/Network.gd"
 
 [debug]
 
