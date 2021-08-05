@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://common/MenuBackground.tscn" type="PackedScene" id=1]
 [ext_resource path="res://client/splash/SplashState.gd" type="Script" id=2]
 [ext_resource path="res://common/MenuPanel.tscn" type="PackedScene" id=3]
-[ext_resource path="res://common/Log.tscn" type="PackedScene" id=4]
 [ext_resource path="res://common/LoadingLabel.tscn" type="PackedScene" id=5]
 [ext_resource path="res://common/Camera2D.tscn" type="PackedScene" id=6]
 
@@ -32,6 +31,4 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Log" parent="UICanvasLayer" instance=ExtResource( 4 )]
-
-[node name="LoadingLabel" parent="UICanvasLayer" instance=ExtResource( 5 )]
+[node name="LoadingIndicator" parent="UICanvasLayer" instance=ExtResource( 5 )]

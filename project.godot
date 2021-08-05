@@ -16,15 +16,15 @@ _global_script_class_icons={
 [application]
 
 config/name="Betrayal"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://addons/ProjectBootstrap/Main.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Constants="*res://Constants.gd"
 GlobalContext="*res://GlobalContext.gd"
-StateMachine="*res://addons/ProjectBootstrap/StateMachine.gd"
 Network="*res://addons/ProjectBootstrap/Network.gd"
+StateMachine="*res://addons/ProjectBootstrap/StateMachine.gd"
 
 [debug]
 
